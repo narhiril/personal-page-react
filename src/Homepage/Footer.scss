@@ -1,20 +1,20 @@
 .footer {
-    display: inline-block;
-    margin-left: 70%;
-    margin-right: auto;
+    display: flex;
+    justify-content: right;
+    max-width: 97%;
 }
 
 .footer > * {
     vertical-align: middle;
 }
 
-#reactLogo {
-    height: 25px;
+#react-logo {
+    height: 1.5rem;
     pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    #reactLogo {
+    #react-logo {
         animation: 10s ease-in-out 0.25s infinite react-spin;
     }
 }

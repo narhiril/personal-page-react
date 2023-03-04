@@ -1,0 +1,25 @@
+
+$link-btn-padding: 25px;
+
+#contact-links {
+    margin-top: $link-btn-padding;
+    width: 75%;
+}
+
+#contact-links .btn {
+    padding-left: $link-btn-padding;
+    padding-right: $link-btn-padding;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+#nameplate {
+    display: block;
+    margin-top: 2.5%;
+}

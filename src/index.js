@@ -4,6 +4,7 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/js/bootstrap.bundle';
+import 'jquery/dist/jquery';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

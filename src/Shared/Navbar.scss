@@ -1,10 +1,25 @@
 .navbar {
     background-color: var(--bs-secondary-bg);
     display: grid;
-    grid-template-columns: 6fr 1fr;
+    grid-template-columns: 4fr 1fr 0.25fr;
     column-gap: 12px;
+    container-type: inline-size;
+    height: 60px !important;
 }
 
 .navbar > #theme-menu {
     grid-column-start: 2;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+
+    button {
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 20px;
+        min-height: 40px;
+    }
+
+    .theme-label {
+        min-width: 75px;
+    }
 }

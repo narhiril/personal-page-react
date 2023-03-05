@@ -1,14 +1,31 @@
-
 $link-btn-padding: 25px;
 
 #contact-links {
     margin-top: $link-btn-padding;
-    width: 75%;
+    display: grid;
+    width: 100%;
+    place-items: center;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr 0.5fr;
 }
 
 #contact-links .btn {
     padding-left: $link-btn-padding;
     padding-right: $link-btn-padding;
+    border-color: var(--bs-heading-color);
+    color: var(--bs-heading-color);
+    width: 15vw;
+}
+
+.item-a {
+    grid-column: 2;
+}
+
+$contact-items: ("a": 2, "b": 3, "c": 4);
+
+@each $item, $col in $contact-items {
+    .item-#{item} {
+        grid-column: $col;
+    }
 }
 
 h1 {

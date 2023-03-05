@@ -9,17 +9,9 @@ const TitleBar = () => {
             <h2 className="text-sm">Junior Web Developer</h2>
           </div>
           <div id="contact-links" className="container text-center">
-            <div className="row">
-              <div className="col gx-2">
-                <a className="btn btn-lg btn-outline-primary" title={email} href={`mailto:${email}`}>Email</a>
-              </div>
-              <div className="col gx-2">
-                <a className="btn btn-lg btn-outline-primary" title="linkedin.com/in/roxanna-rusbarsky" href="https://www.linkedin.com/in/roxanna-rusbarsky/">LinkedIn</a>
-              </div>
-              <div className="col gx-2">
-                <a className="btn btn-lg btn-outline-primary" title="github.com/narhiril" href="https://github.com/narhiril">GitHub</a>
-              </div>
-            </div>
+                <a className="item-a btn btn-lg btn-outline-dark" title={email} href={`mailto:${email}`}>Email</a>
+                <a className="item-b btn btn-lg btn-outline-dark" title="linkedin.com/in/roxanna-rusbarsky" href="https://www.linkedin.com/in/roxanna-rusbarsky/">LinkedIn</a>
+                <a className="item-c btn btn-lg btn-outline-dark" title="github.com/narhiril" href="https://github.com/narhiril">GitHub</a>
           </div>
         </div>
     );

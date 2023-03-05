@@ -27,8 +27,8 @@ const Navbar = () => {
     return ( 
         <div className="navbar navbar-expand-md container-fluid">
             <div id="theme-menu" className="dropdown-center btn-group">
-            <button className="btn btn-info theme-label" type="button">{current}</button>
-            <button className="btn btn-info dropdown-toggle dropdown-toggle-split" 
+            <button className="btn btn-navbar theme-label" type="button">{current}</button>
+            <button className="btn btn-navbar dropdown-toggle dropdown-toggle-split" 
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -37,7 +37,7 @@ const Navbar = () => {
             <ul className="dropdown-menu" onClick={() => updateThemeMenuText()}>
                 {
                     themes.map((theme, index) => 
-                        <ThemeOption key={index} id={index} name={theme.name} value={theme.value}/>
+                        <ThemeOption key={index} id={index} name={theme.name} value={theme.value} />
                     )
                 }
             </ul>

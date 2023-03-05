@@ -23,3 +23,28 @@
         min-width: 75px;
     }
 }
+
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/variables-dark";
+@import "../Shared/Themes/variables-deepblue.scss";
+@import "../Shared/Themes/variables-redshift.scss";
+@import "../../node_modules/bootstrap/scss/mixins/";
+
+$nav-button-color: $headings-color or $body-emphasis-color;
+
+.btn-navbar {
+    @include button-outline-variant($nav-button-color);
+}
+
+[data-bs-theme="dark"] .btn-navbar {
+    @include button-outline-variant($headings-color-dark);
+}
+
+[data-bs-theme="deepblue"] .btn-navbar {
+    @include button-outline-variant($headings-color-deepblue);
+}
+
+[data-bs-theme="redshift"] .btn-navbar {
+    @include button-outline-variant($headings-color-redshift);
+}

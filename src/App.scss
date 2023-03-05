@@ -12,13 +12,20 @@
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/variables-dark";
 
-//theme variables would go here
+//theme variables go here
+
+$enable-theme-deepblue: true !default;
+$enable-theme-redshift: true !default;
+@import "../src/Shared/Themes/variables-deepblue.scss";
+@import "../src/Shared/Themes/variables-redshift.scss";
 
 //the rest of bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
 
-//theme overrides and custom code would go here
+//theme overrides and custom code go here
 
+@import "../src/Shared/Themes/theme-deepblue.scss";
+@import "../src/Shared/Themes/theme-redshift.scss";
 
 //extra css variables
 $theme-colortypes: "primary", "secondary", "info", "success", "warning", "danger";

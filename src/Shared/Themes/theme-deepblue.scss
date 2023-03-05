@@ -1,0 +1,96 @@
+﻿
+@import "./variables-deepblue.scss";
+
+@if $enable-theme-deepblue {
+    @include color-mode(deepblue, true) {
+        --#{$prefix}body-color: #{$body-color-deepblue};
+        --#{$prefix}body-color-rgb: #{to-rgb($body-color-deepblue)};
+        --#{$prefix}body-bg: #{$body-bg-deepblue};
+        --#{$prefix}body-bg-rgb: #{to-rgb($body-bg-deepblue)};
+        --#{$prefix}emphasis-color: #{$body-emphasis-color-deepblue};
+        --#{$prefix}emphasis-color-rgb: #{to-rgb($body-emphasis-color-deepblue)};
+        --#{$prefix}secondary-color: #{$body-secondary-color-deepblue};
+        --#{$prefix}secondary-color-rgb: #{to-rgb($body-secondary-color-deepblue)};
+        --#{$prefix}secondary-bg: #{$body-secondary-bg-deepblue};
+        --#{$prefix}secondary-bg-rgb: #{to-rgb($body-secondary-bg-deepblue)};
+        --#{$prefix}tertiary-color: #{$body-tertiary-color-deepblue};
+        --#{$prefix}tertiary-color-rgb: #{to-rgb($body-tertiary-color-deepblue)};
+        --#{$prefix}tertiary-bg: #{$body-tertiary-bg-deepblue};
+        --#{$prefix}tertiary-bg-rgb: #{to-rgb($body-tertiary-bg-deepblue)};
+        --#{$prefix}emphasis-color: #{$emphasis-color-deepblue};
+        --#{$prefix}primary-text: #{$primary-text-deepblue};
+        --#{$prefix}secondary-text: #{$secondary-text-deepblue};
+        --#{$prefix}success-text: #{$success-text-deepblue};
+        --#{$prefix}info-text: #{$info-text-deepblue};
+        --#{$prefix}warning-text: #{$warning-text-deepblue};
+        --#{$prefix}danger-text: #{$danger-text-deepblue};
+        --#{$prefix}light-text: #{$light-text-deepblue};
+        --#{$prefix}dark-text: #{$dark-text-deepblue};
+        --#{$prefix}primary-bg-subtle: #{$primary-bg-subtle-deepblue};
+        --#{$prefix}secondary-bg-subtle: #{$secondary-bg-subtle-deepblue};
+        --#{$prefix}success-bg-subtle: #{$success-bg-subtle-deepblue};
+        --#{$prefix}info-bg-subtle: #{$info-bg-subtle-deepblue};
+        --#{$prefix}warning-bg-subtle: #{$warning-bg-subtle-deepblue};
+        --#{$prefix}danger-bg-subtle: #{$danger-bg-subtle-deepblue};
+        --#{$prefix}light-bg-subtle: #{$light-bg-subtle-deepblue};
+        --#{$prefix}dark-bg-subtle: #{$dark-bg-subtle-deepblue};
+        --#{$prefix}primary-border-subtle: #{$primary-border-subtle-deepblue};
+        --#{$prefix}secondary-border-subtle: #{$secondary-border-subtle-deepblue};
+        --#{$prefix}success-border-subtle: #{$success-border-subtle-deepblue};
+        --#{$prefix}info-border-subtle: #{$info-border-subtle-deepblue};
+        --#{$prefix}warning-border-subtle: #{$warning-border-subtle-deepblue};
+        --#{$prefix}danger-border-subtle: #{$danger-border-subtle-deepblue};
+        --#{$prefix}light-border-subtle: #{$light-border-subtle-deepblue};
+        --#{$prefix}dark-border-subtle: #{$dark-border-subtle-deepblue};
+        --#{$prefix}heading-color: #{$headings-color-deepblue};
+        --#{$prefix}link-color: #{$link-color-deepblue};
+        --#{$prefix}link-hover-color: #{$link-hover-color-deepblue};
+        --#{$prefix}link-color-rgb: #{to-rgb($link-color-deepblue)};
+        --#{$prefix}link-hover-color-rgb: #{to-rgb($link-hover-color-deepblue)};
+        --#{$prefix}code-color: #{$code-color-deepblue};
+        --#{$prefix}border-color: #{$border-color-deepblue};
+        --#{$prefix}border-color-translucent: #{$border-color-translucent-deepblue};
+
+        --#{$prefix}bg-primary-theme: #{$deepblue-primary};
+        --#{$prefix}bg-secondary-theme: #{$deepblue-secondary};
+        --#{$prefix}bg-info-theme: #{$deepblue-info};
+        --#{$prefix}bg-success-theme: #{$deepblue-success};
+        --#{$prefix}bg-warning-theme: #{$deepblue-warning};
+        --#{$prefix}bg-danger-theme: #{$deepblue-danger};
+    }
+
+}
+
+[data-bs-theme="deepblue"]
+.navbar {
+    --#{$prefix}navbar-color: #{$navbar-deepblue-color};
+    --#{$prefix}navbar-hover-color: #{$navbar-deepblue-hover-color};
+    --#{$prefix}navbar-disabled-color: #{$navbar-deepblue-disabled-color};
+    --#{$prefix}navbar-active-color: #{$navbar-deepblue-active-color};
+}
+
+@each $key, $button-color in $deepblue-button-colors {
+    [data-bs-theme="deepblue"]
+    .btn-#{$key} {
+        @include button-variant( 
+            shade-color($button-color, 30%),
+            shade-color($button-color, 15%),
+            $headings-color-deepblue,
+            $hover-color: shade-color($headings-color-deepblue, 30%),
+            $hover-border: $button-color,
+            $hover-background: shade-color($button-color, 35%),
+            $active-color: shade-color($headings-color-deepblue, 60%),
+            $active-background: shade-color($button-color, 65%),
+            $active-border: shade-color($button-color, 30%),
+            $disabled-background: mix($button-color, $deepblue-abyss, 85%),
+            $disabled-border: mix($button-color, $deepblue-abyss, 85%),
+            $disabled-color: mix($headings-color-deepblue, $deepblue-abyss, 85%)
+        );
+    }
+}
+
+[data-bs-theme="deepblue"]
+.nav-link.active {
+    --#{$prefix}nav-pills-link-active-color: #{$nav-deepblue-pills-link-active-color};
+    --#{$prefix}nav-pills-link-active-bg: #{$nav-deepblue-pills-link-active-bg};
+}

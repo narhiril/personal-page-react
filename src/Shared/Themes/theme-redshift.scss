@@ -1,0 +1,96 @@
+﻿
+@import "./variables-redshift.scss";
+
+@if $enable-theme-redshift {
+    @include color-mode(redshift, true) {
+        --#{$prefix}body-color: #{$body-color-redshift};
+        --#{$prefix}body-color-rgb: #{to-rgb($body-color-redshift)};
+        --#{$prefix}body-bg: #{$body-bg-redshift};
+        --#{$prefix}body-bg-rgb: #{to-rgb($body-bg-redshift)};
+        --#{$prefix}emphasis-color: #{$body-emphasis-color-redshift};
+        --#{$prefix}emphasis-color-rgb: #{to-rgb($body-emphasis-color-redshift)};
+        --#{$prefix}secondary-color: #{$body-secondary-color-redshift};
+        --#{$prefix}secondary-color-rgb: #{to-rgb($body-secondary-color-redshift)};
+        --#{$prefix}secondary-bg: #{$body-secondary-bg-redshift};
+        --#{$prefix}secondary-bg-rgb: #{to-rgb($body-secondary-bg-redshift)};
+        --#{$prefix}tertiary-color: #{$body-tertiary-color-redshift};
+        --#{$prefix}tertiary-color-rgb: #{to-rgb($body-tertiary-color-redshift)};
+        --#{$prefix}tertiary-bg: #{$body-tertiary-bg-redshift};
+        --#{$prefix}tertiary-bg-rgb: #{to-rgb($body-tertiary-bg-redshift)};
+        --#{$prefix}emphasis-color: #{$emphasis-color-redshift};
+        --#{$prefix}primary-text: #{$primary-text-redshift};
+        --#{$prefix}secondary-text: #{$secondary-text-redshift};
+        --#{$prefix}success-text: #{$success-text-redshift};
+        --#{$prefix}info-text: #{$info-text-redshift};
+        --#{$prefix}warning-text: #{$warning-text-redshift};
+        --#{$prefix}danger-text: #{$danger-text-redshift};
+        --#{$prefix}light-text: #{$light-text-redshift};
+        --#{$prefix}dark-text: #{$dark-text-redshift};
+        --#{$prefix}primary-bg-subtle: #{$primary-bg-subtle-redshift};
+        --#{$prefix}secondary-bg-subtle: #{$secondary-bg-subtle-redshift};
+        --#{$prefix}success-bg-subtle: #{$success-bg-subtle-redshift};
+        --#{$prefix}info-bg-subtle: #{$info-bg-subtle-redshift};
+        --#{$prefix}warning-bg-subtle: #{$warning-bg-subtle-redshift};
+        --#{$prefix}danger-bg-subtle: #{$danger-bg-subtle-redshift};
+        --#{$prefix}light-bg-subtle: #{$light-bg-subtle-redshift};
+        --#{$prefix}dark-bg-subtle: #{$dark-bg-subtle-redshift};
+        --#{$prefix}primary-border-subtle: #{$primary-border-subtle-redshift};
+        --#{$prefix}secondary-border-subtle: #{$secondary-border-subtle-redshift};
+        --#{$prefix}success-border-subtle: #{$success-border-subtle-redshift};
+        --#{$prefix}info-border-subtle: #{$info-border-subtle-redshift};
+        --#{$prefix}warning-border-subtle: #{$warning-border-subtle-redshift};
+        --#{$prefix}danger-border-subtle: #{$danger-border-subtle-redshift};
+        --#{$prefix}light-border-subtle: #{$light-border-subtle-redshift};
+        --#{$prefix}dark-border-subtle: #{$dark-border-subtle-redshift};
+        --#{$prefix}heading-color: #{$headings-color-redshift};
+        --#{$prefix}link-color: #{$link-color-redshift};
+        --#{$prefix}link-hover-color: #{$link-hover-color-redshift};
+        --#{$prefix}link-color-rgb: #{to-rgb($link-color-redshift)};
+        --#{$prefix}link-hover-color-rgb: #{to-rgb($link-hover-color-redshift)};
+        --#{$prefix}code-color: #{$code-color-redshift};
+        --#{$prefix}border-color: #{$border-color-redshift};
+        --#{$prefix}border-color-translucent: #{$border-color-translucent-redshift};
+        
+        --#{$prefix}bg-primary-theme: #{$redshift-primary};
+        --#{$prefix}bg-secondary-theme: #{$redshift-secondary};
+        --#{$prefix}bg-info-theme: #{$redshift-info};
+        --#{$prefix}bg-success-theme: #{$redshift-success};
+        --#{$prefix}bg-warning-theme: #{$redshift-warning};
+        --#{$prefix}bg-danger-theme: #{$redshift-danger};
+    }
+
+}
+
+[data-bs-theme="redshift"]
+.navbar {
+    --#{$prefix}navbar-color: #{$navbar-redshift-color};
+    --#{$prefix}navbar-hover-color: #{$navbar-redshift-hover-color};
+    --#{$prefix}navbar-disabled-color: #{$navbar-redshift-disabled-color};
+    --#{$prefix}navbar-active-color: #{$navbar-redshift-active-color};
+}
+
+@each $key, $button-color in $redshift-button-colors {
+    [data-bs-theme="redshift"]
+    .btn-#{$key} {
+        @include button-variant( 
+            shade-color($button-color, 30%),
+            shade-color($button-color, 15%),
+            $headings-color-redshift,
+            $hover-color: shade-color($headings-color-redshift, 30%),
+            $hover-border: $button-color,
+            $hover-background: shade-color($button-color, 35%),
+            $active-color: shade-color($headings-color-redshift, 60%),
+            $active-background: shade-color($button-color, 65%),
+            $active-border: shade-color($button-color, 30%),
+            $disabled-background: mix($button-color, $redshift-void, 85%),
+            $disabled-border: mix($button-color, $redshift-void, 85%),
+            $disabled-color: mix($headings-color-redshift, $redshift-void, 85%)
+        );
+    }
+}
+
+[data-bs-theme="redshift"]
+.nav-link.active {
+    --#{$prefix}nav-pills-link-active-color: #{$nav-redshift-pills-link-active-color};
+    --#{$prefix}nav-pills-link-active-bg: #{$nav-redshift-pills-link-active-bg};
+}

@@ -1,0 +1,10 @@
+.navbar {
+    background-color: var(--bs-secondary-bg);
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    column-gap: 12px;
+}
+
+.navbar > #theme-menu {
+    grid-column-start: 2;
+}

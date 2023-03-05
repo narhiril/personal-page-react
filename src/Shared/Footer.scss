@@ -1,14 +1,18 @@
 .footer {
-    display: flex;
-    justify-content: right;
-    max-width: 97%;
+    background-color: var(--bs-secondary-bg);
+    height: 2.5em;
+    position: fixed;
+    bottom: 0px;
 }
 
-.footer > * {
-    vertical-align: middle;
+#react-footer {
+    position: fixed;
+    right: 2%;
+    bottom: 5px;
 }
 
 #react-logo {
+    translate: 0px -0.125rem;
     height: 1.5rem;
     pointer-events: none;
 }

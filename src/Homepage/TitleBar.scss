@@ -1,7 +1,16 @@
-$link-btn-padding: 25px;
+$link-btn-padding: 5vw;
+
+@mixin contact-logo-size {
+    min-width: 40%;
+    max-width: 65%;
+}
+
+@mixin contact-logo-white {
+    filter: brightness(0%) invert(100%);
+}
 
 #contact-links {
-    margin-top: $link-btn-padding;
+    margin-top: 2vw;
     display: grid;
     width: 100%;
     place-items: center;
@@ -13,19 +22,42 @@ $link-btn-padding: 25px;
     padding-right: $link-btn-padding;
     --bs-btn-border-color: var(--bs-heading-color);
     --bs-btn-color: var(--bs-heading-color);
-    width: 15vw;
+    font-size: 3vmin;
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 15vw;
+    min-height: 7vh;
+    max-height: 12vh;
+}
+
+#linkedin, #github {
+    @include contact-logo-size();
+}
+
+[data-bs-theme="dark"],
+[data-bs-theme="deepblue"],
+[data-bs-theme="redshift"] {
+    #linkedin {
+        @include contact-logo-white();
+    }
+    #github {
+        @include contact-logo-white();
+    }
 }
 
 [data-bs-theme="light"] #contact-links .btn {
-    padding-left: $link-btn-padding;
-    padding-right: $link-btn-padding;
     --bs-btn-border-color: var(--bs-body-color);
     --bs-btn-color: var(--bs-body-color);
-    width: 15vw;
+}
+
+[data-bs-theme="light"] 
+#contact-links .btn:hover img {   
+    @include contact-logo-white();
+    transition: filter 0.1s linear;
 }
 
 #profile-img {
-    border-radius: 65%;
+    border-radius: 50%;
 }
 
 .item-a {
@@ -36,20 +68,21 @@ $link-btn-padding: 25px;
     margin: auto;
     display: grid;
     margin-top: 2.5%;
-    width: 75%;
-    height: 200px;
+    width: 50%;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1vw 3vw 2vw 1vw;
     grid-gap: 12px;
+    border-radius: 5% 5% 5% 5%;
+    background-color: var(--bs-secondary-bg);
     h1 {
         font-size: 3.2vw;
-        grid-row-start: 2;
+        grid-row: 2;
         justify-self: start;
     }
     h2 {
         font-size: 2vw;
-        grid-row-start: 3;
-        grid-column-start: 2;
+        grid-row: 3;
+        grid-column: 2;
     }
     img {
         max-height: 6vmax;

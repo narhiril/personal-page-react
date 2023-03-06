@@ -1,12 +1,14 @@
 import "./TitleBar.scss";
+import placeholder from "../Homepage/pfp.jpg";
 
 const TitleBar = () => {
     const email = "roxannarusbarsky@yahoo.com";
     return (
         <div className='title-bar'>
-          <div id="nameplate" className="container text-center">
+          <div id="nameplate">
+            <img id="profile-img" src={placeholder} alt="Profile picture"></img>
             <h1>Roxanna Rusbarsky</h1>
-            <h2 className="text-sm">Junior Web Developer</h2>
+            <h2 className="text-sm">Full Stack Web Developer</h2>
           </div>
           <div id="contact-links" className="container text-center">
                 <a className="item-a btn btn-lg btn-outline-dark" title={email} href={`mailto:${email}`}>Email</a>

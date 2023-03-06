@@ -89,8 +89,14 @@
     }
 }
 
-[data-bs-theme="redshift"]
-.nav-link.active {
-    --#{$prefix}nav-pills-link-active-color: #{$nav-redshift-pills-link-active-color};
-    --#{$prefix}nav-pills-link-active-bg: #{$nav-redshift-pills-link-active-bg};
+[data-bs-theme="redshift"] {
+    .nav-link.active {
+        --#{$prefix}nav-pills-link-active-color: #{$nav-redshift-pills-link-active-color};
+        --#{$prefix}nav-pills-link-active-bg: #{$nav-redshift-pills-link-active-bg};
+    }
+    .btn-outline-dark {
+        --#{$prefix}btn-hover-color: #{tint-color($headings-color-redshift, 20%)};
+        --#{$prefix}btn-hover-bg: #{mix($body-bg-redshift, $redshift-inferno, 65%)};
+        --#{$prefix}btn-hover-border-color: #{mix($body-bg-redshift, $redshift-inferno, 55%)};
+    }
 }

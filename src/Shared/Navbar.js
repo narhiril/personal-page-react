@@ -27,7 +27,11 @@ const Navbar = () => {
     return ( 
         <div className="navbar navbar-expand-md container-fluid">
             <div id="theme-menu" className="dropdown-center btn-group">
-            <button className="btn btn-navbar theme-label" type="button">{current}</button>
+            <button className="btn btn-navbar theme-label" 
+                    type="button" 
+                    title="Select a theme using the dropdown">
+                    {current}
+            </button>
             <button className="btn btn-navbar dropdown-toggle dropdown-toggle-split" 
                     type="button"
                     data-bs-toggle="dropdown"

@@ -1,26 +1,36 @@
 .navbar {
     background-color: var(--bs-secondary-bg);
     display: grid;
-    grid-template-columns: 4fr 1fr 0.25fr;
-    column-gap: 12px;
+    grid-template-columns: 70vw 20vw 10vw 5vw;
+    grid-template-rows: 7vh;
     container-type: inline-size;
-    height: 60px !important;
+    height: 9vh !important;
 }
 
 .navbar > #theme-menu {
     grid-column-start: 2;
     display: grid;
-    grid-template-columns: 5fr 1fr;
+    grid-template-columns: 2fr 0.75fr;
+    grid-template-rows: 7vh;
 
     button {
+        font-size: 2.5vmin;
         white-space: nowrap;
         overflow: hidden;
-        min-width: 20px;
-        min-height: 40px;
+        min-width: 3vw;
+        min-height: 2vh;
+        max-height: 6vh;
     }
 
-    .theme-label {
-        min-width: 75px;
+    button.theme-label {
+        justify-self: end;
+        grid-column: 1;
+        min-width: 8vw;
+    }
+
+    button.dropdown-toggle {
+        justify-self: start;
+        grid-column: 2;
     }
 }
 
@@ -33,18 +43,33 @@
 
 $nav-button-color: $headings-color or $body-emphasis-color;
 
+@mixin button-navbar-active($hover-text, $hover-bg, $active-bg: $hover-bg) {
+    --#{$prefix}btn-hover-color: #{$hover-text};
+    --#{$prefix}btn-hover-bg: #{$hover-bg};
+    --#{$prefix}btn-hover-border-color: #{$hover-bg};
+    --#{$prefix}btn-active-border-color: #{mix($active-bg, $hover-bg, 75%)};
+    --#{$prefix}btn-active-bg: #{$active-bg};
+    --#{$prefix}btn-active-color: #{contrast($hover-text, 25%)};
+}
+
 .btn-navbar {
     @include button-outline-variant($nav-button-color);
 }
 
 [data-bs-theme="dark"] .btn-navbar {
     @include button-outline-variant($headings-color-dark);
+    @include button-navbar-active($headings-color-dark, $primary-bg-subtle-dark);
 }
 
 [data-bs-theme="deepblue"] .btn-navbar {
     @include button-outline-variant($headings-color-deepblue);
+    @include button-navbar-active($headings-color-deepblue, 
+                                  mix($deepblue-fathom, $deepblue-regalia, 75%));
 }
 
 [data-bs-theme="redshift"] .btn-navbar {
     @include button-outline-variant($headings-color-redshift);
+    @include button-navbar-active($headings-color-redshift, 
+                                  mix($body-bg-redshift, $redshift-inferno, 45%),
+                                  $redshift-inferno);
 }

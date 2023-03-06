@@ -1,6 +1,6 @@
 .footer {
     background-color: var(--bs-secondary-bg);
-    height: 2.5em;
+    height: 6vh;
     position: fixed;
     bottom: 0px;
 }
@@ -8,12 +8,13 @@
 #react-footer {
     position: fixed;
     right: 2%;
-    bottom: 5px;
+    bottom: 0.5vh;
+    font-size: 3vh;
 }
 
 #react-logo {
-    translate: 0px -0.125rem;
-    height: 1.5rem;
+    translate: 0px -0.5vh;
+    height: 4vh;
     pointer-events: none;
 }
 

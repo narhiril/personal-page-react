@@ -1,79 +1,13 @@
-$link-btn-padding: 5vw;
-
-@mixin contact-logo-size {
-    min-width: 40%;
-    max-width: 65%;
-}
-
-@mixin contact-logo-white {
-    filter: brightness(0%) invert(100%);
-}
-
-#contact-links {
-    margin-top: 2vw;
-    display: grid;
-    width: 100%;
-    place-items: center;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr 0.5fr;
-}
-
-#contact-links .btn {
-    padding-left: $link-btn-padding;
-    padding-right: $link-btn-padding;
-    --bs-btn-border-color: var(--bs-heading-color);
-    --bs-btn-color: var(--bs-heading-color);
-    font-size: 3vmin;
-    white-space: nowrap;
-    overflow: hidden;
-    min-width: 15vw;
-    min-height: 7vh;
-    max-height: 12vh;
-}
-
-#linkedin, #github {
-    @include contact-logo-size();
-}
-
-[data-bs-theme="dark"],
-[data-bs-theme="deepblue"],
-[data-bs-theme="redshift"] {
-    #linkedin {
-        @include contact-logo-white();
-    }
-    #github {
-        @include contact-logo-white();
-    }
-}
-
-[data-bs-theme="light"] #contact-links .btn {
-    --bs-btn-border-color: var(--bs-body-color);
-    --bs-btn-color: var(--bs-body-color);
-}
-
-[data-bs-theme="light"] 
-#contact-links .btn:hover img {   
-    @include contact-logo-white();
-    transition: filter 0.1s linear;
-}
+@import "../Shared/Themes/scss/shared.scss";
 
 #profile-img {
     border-radius: 50%;
 }
 
-.item-a {
-    grid-column: 2;
-}
-
 #nameplate {
-    margin: auto;
-    display: grid;
-    margin-top: 2.5%;
-    width: 50%;
-    grid-template-columns: 1fr 2fr;
+    @include bio-panel-grid(42%);
+    grid-template-columns: 10vw 35vw;
     grid-template-rows: 1vw 3vw 2vw 1vw;
-    grid-gap: 12px;
-    border-radius: 5% 5% 5% 5%;
-    background-color: var(--bs-secondary-bg);
     h1 {
         font-size: 3.2vw;
         grid-row: 2;

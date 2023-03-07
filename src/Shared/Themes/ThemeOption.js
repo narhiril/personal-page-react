@@ -1,4 +1,4 @@
-import * as themeScript from "../Scripts/themes.js";
+import * as themeScript from "./ThemeScript.js";
 
 const ThemeOption = (props) => {
     return (  

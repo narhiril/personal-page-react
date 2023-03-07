@@ -1,0 +1,50 @@
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/variables-dark";
+@import "../../../Shared/Themes/scss/variables-deepblue.scss";
+@import "../../../Shared/Themes/scss/variables-redshift.scss";
+@import "../../../../node_modules/bootstrap/scss/mixins/";
+
+$nav-button-color: $headings-color or $body-emphasis-color;
+$navbar-item-height: 7vh;
+
+@mixin button-navbar-active($hover-text, $hover-bg, $active-bg: $hover-bg) {
+    --#{$prefix}btn-hover-color: #{$hover-text};
+    --#{$prefix}btn-hover-bg: #{$hover-bg};
+    --#{$prefix}btn-hover-border-color: #{$hover-bg};
+    --#{$prefix}btn-active-border-color: #{mix($active-bg, $hover-bg, 75%)};
+    --#{$prefix}btn-active-bg: #{$active-bg};
+    --#{$prefix}btn-active-color: #{contrast($hover-text, 25%)};
+}
+
+@mixin bio-panel-grid ($width: 50%) {
+    margin: auto;
+    display: grid;
+    margin-top: 2.5%;
+    width: $width;
+    grid-gap: 12px;
+    border-radius: 5% 5% 5% 5%;
+    background-color: var(--bs-secondary-bg);
+}
+
+.btn-navbar {
+    @include button-outline-variant($nav-button-color);
+}
+
+[data-bs-theme="dark"] .btn-navbar {
+    @include button-outline-variant($headings-color-dark);
+    @include button-navbar-active($headings-color-dark, $primary-bg-subtle-dark);
+}
+
+[data-bs-theme="deepblue"] .btn-navbar {
+    @include button-outline-variant($headings-color-deepblue);
+    @include button-navbar-active($headings-color-deepblue, 
+                                  mix($deepblue-fathom, $deepblue-regalia, 75%));
+}
+
+[data-bs-theme="redshift"] .btn-navbar {
+    @include button-outline-variant($headings-color-redshift);
+    @include button-navbar-active($headings-color-redshift, 
+                                  mix($body-bg-redshift, $redshift-inferno, 45%),
+                                  $redshift-inferno);
+}

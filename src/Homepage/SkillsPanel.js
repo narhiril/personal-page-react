@@ -1,6 +1,8 @@
 const SkillsPanel = () => {
-    return (  
-        //todo
+    return ( 
+        <div className="skills-panel">
+
+        </div>
     );
 }
  

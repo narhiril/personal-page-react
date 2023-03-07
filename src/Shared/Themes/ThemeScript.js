@@ -36,11 +36,6 @@ export function onThemeChange(choice) {
         console.log(`Theme loaded: ${choice}`);
         localStorage.setItem('user-theme', choice);
         showPage();
-        /*
-        setTimeout(() => {
-            showPage();
-        }, 400);
-        */
     }
 }
 

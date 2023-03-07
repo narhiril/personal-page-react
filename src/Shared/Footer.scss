@@ -5,6 +5,38 @@
     bottom: 0px;
 }
 
+.footer #theme-menu {
+    grid-column-start: 2;
+    display: grid;
+    grid-template-columns: 2vw 10vw 10vw;
+    grid-template-rows: 5vh;
+    position: fixed;
+    left: 2%;
+    bottom: 0.5vh;
+
+    button {
+        font-size: 2.5vmin;
+        line-height: 2.5vmin;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 3vw;
+        min-height: 2vh;
+        max-height: 6vh;
+    }
+
+    button.theme-label {
+        justify-self: end;
+        grid-column: 2;
+        min-width: 8vw;
+        max-width: 30vw;
+    }
+
+    button.dropdown-toggle {
+        justify-self: start;
+        grid-column: 3;
+    }
+}
+
 #react-footer {
     position: fixed;
     right: 2%;

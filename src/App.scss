@@ -16,16 +16,16 @@
 
 $enable-theme-deepblue: true !default;
 $enable-theme-redshift: true !default;
-@import "../src/Shared/Themes/variables-deepblue.scss";
-@import "../src/Shared/Themes/variables-redshift.scss";
+@import "../src/Shared/Themes/scss/variables-deepblue.scss";
+@import "../src/Shared/Themes/scss/variables-redshift.scss";
 
 //the rest of bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 //theme overrides and custom code go here
 
-@import "../src/Shared/Themes/theme-deepblue.scss";
-@import "../src/Shared/Themes/theme-redshift.scss";
+@import "../src/Shared/Themes/scss/theme-deepblue.scss";
+@import "../src/Shared/Themes/scss/theme-redshift.scss";
 
 //extra css variables
 $theme-colortypes: "primary", "secondary", "info", "success", "warning", "danger";

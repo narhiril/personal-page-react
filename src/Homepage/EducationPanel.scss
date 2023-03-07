@@ -1,0 +1,7 @@
+@import "../Shared/Themes/scss/shared.scss";
+
+#education {
+    @include bio-panel-grid();
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}

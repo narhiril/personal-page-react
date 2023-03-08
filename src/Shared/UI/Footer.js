@@ -1,6 +1,6 @@
 import "./Footer.scss";
-import ReactLogo from "../Assets/reactlogo.svg";
-import ThemeMenu from "./Themes/ThemeMenu";
+import ReactLogo from "../../Assets/reactlogo.svg";
+import ThemeMenu from "../Themes/ThemeMenu";
 
 const Footer = () => {
     return (  

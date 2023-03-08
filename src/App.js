@@ -1,7 +1,7 @@
 import './App.scss';
-import Navbar from './Shared/Navbar';
+import Navbar from './Shared/UI/Navbar';
 import TitleBar from './Homepage/TitleBar';
-import Footer from './Shared/Footer';
+import Footer from './Shared/UI/Footer';
 import {Helmet} from 'react-helmet';
 
 function App() {

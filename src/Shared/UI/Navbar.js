@@ -1,5 +1,5 @@
 import "./Navbar.scss";
-import ContactLinks from "./Contact/ContactLinks";
+import ContactLinks from "./ContactLinks";
 
 const Navbar = () => {
 

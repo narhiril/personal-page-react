@@ -2,6 +2,7 @@
 
 $link-btn-padding: 5px;
 
+/*
 @mixin contact-logo-size {
     max-height: calc(#{$navbar-item-height} - 3vh);
     max-width: 12vw;
@@ -10,29 +11,34 @@ $link-btn-padding: 5px;
 @mixin contact-logo-white {
     filter: brightness(0%) invert(100%);
 }
+*/
 
 #contact-links {
-    grid-column: 4;
-    display: grid;
+    float: right;
     width: 100%;
-    place-items: center;
-    grid-template-columns: 0.5fr 1fr 1fr 1fr 0.5fr;
-    grid-template-rows: #{$navbar-item-height};
-    grid-gap: 1vw;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: $link-btn-padding;
 }
 
 #contact-links .btn {
+    clear: both;
     padding-left: $link-btn-padding;
     padding-right: $link-btn-padding;
     --bs-btn-border-color: var(--bs-heading-color);
     --bs-btn-color: var(--bs-heading-color);
     font-size: 3vmin;
+    width: 6em;
     white-space: nowrap;
     overflow: hidden;
-    min-width: 15vw;
     height: #{$navbar-item-height};
+    svg {
+        margin-top: -0.125em;
+    }
 }
 
+/*
 #linkedin, #github {
     @include contact-logo-size();
 }
@@ -47,6 +53,7 @@ $link-btn-padding: 5px;
         @include contact-logo-white();
     }
 }
+*/
 
 [data-bs-theme="light"] #contact-links .btn {
     --bs-btn-border-color: var(--bs-body-color);
@@ -55,7 +62,7 @@ $link-btn-padding: 5px;
 
 [data-bs-theme="light"] 
 #contact-links .btn:hover img {   
-    @include contact-logo-white();
+    //@include contact-logo-white();
     transition: filter 0.1s linear;
 }
 

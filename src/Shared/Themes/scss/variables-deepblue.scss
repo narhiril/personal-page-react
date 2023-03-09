@@ -50,7 +50,7 @@ $light-text-deepblue: $deepblue-gray-800;
 $dark-text-deepblue: $deepblue-gray-100;
 
 $primary-bg-subtle-deepblue: $deepblue-gray-700;
-$secondary-bg-subtle-deepblue: $deepblue-gray-800;
+$secondary-bg-subtle-deepblue: mix($deepblue-gray-900, $deepblue-abyss, 90%);
 $success-bg-subtle-deepblue: mix($deepblue-algae, $deepblue-abyss);
 $info-bg-subtle-deepblue: mix($deepblue-wave, $deepblue-abyss);
 $warning-bg-subtle-deepblue: mix($deepblue-clownfish, $deepblue-abyss);
@@ -59,7 +59,7 @@ $light-bg-subtle-deepblue: $deepblue-gray-200;
 $dark-bg-subtle-deepblue: $deepblue-gray-900;
 
 $primary-border-subtle-deepblue: $deepblue-gray-500;
-$secondary-border-subtle-deepblue: $deepblue-gray-700;
+$secondary-border-subtle-deepblue: $deepblue-gray-600;
 $success-border-subtle-deepblue: shade-color($deepblue-algae, 25%);
 $info-border-subtle-deepblue: shade-color($deepblue-wave, 25%);
 $warning-border-subtle-deepblue: shade-color($deepblue-clownfish, 25%);

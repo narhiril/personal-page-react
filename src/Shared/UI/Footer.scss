@@ -1,5 +1,7 @@
+@import "../../Shared/Themes/scss/shared.scss";
+
 .footer {
-    background-color: var(--bs-secondary-bg);
+    background-color: #{$navbar-shared-color};
     height: 6vh;
     position: fixed;
     bottom: 0px;
@@ -8,11 +10,12 @@
 .footer #theme-menu {
     grid-column-start: 2;
     display: grid;
-    grid-template-columns: 2vw 10vw 10vw;
+    grid-template-columns: 4vw 10vw 10vw;
     grid-template-rows: 5vh;
     position: fixed;
     left: 2%;
     bottom: 0.5vh;
+    margin: 0px 10px;
 
     button {
         font-size: 2.5vmin;

@@ -50,7 +50,7 @@ $light-text-redshift: $redshift-gray-800;
 $dark-text-redshift: $redshift-gray-100;
 
 $primary-bg-subtle-redshift: $redshift-gray-700;
-$secondary-bg-subtle-redshift: $redshift-gray-400;
+$secondary-bg-subtle-redshift: mix($redshift-void, $redshift-nebula, 95%);
 $success-bg-subtle-redshift: mix($redshift-success, $redshift-void);
 $info-bg-subtle-redshift: mix($redshift-info, $redshift-void);
 $warning-bg-subtle-redshift: mix($redshift-warning, $redshift-void);

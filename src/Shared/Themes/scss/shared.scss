@@ -7,6 +7,18 @@
 
 $nav-button-color: $headings-color or $body-emphasis-color;
 $navbar-item-height: 7vh;
+$navbar-shared-color: var(--bs-secondary-bg-subtle);
+
+@mixin center-flex {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin absolute-center-horizontal {
+    position: absolute;
+    left: 50%;
+    translate: -50% 0px;
+}
 
 @mixin button-navbar-active($hover-text, $hover-bg, $active-bg: $hover-bg) {
     --#{$prefix}btn-hover-color: #{$hover-text};
@@ -17,14 +29,14 @@ $navbar-item-height: 7vh;
     --#{$prefix}btn-active-color: #{contrast($hover-text, 25%)};
 }
 
-@mixin bio-panel-grid ($width: 50%) {
+@mixin bio-panel-grid ($width: unset, $gap: 12px) {
     margin: auto;
     display: grid;
     margin-top: 2.5%;
     width: $width;
-    grid-gap: 12px;
+    grid-gap: $gap;
     border-radius: 5% 5% 5% 5%;
-    background-color: var(--bs-secondary-bg);
+    background-image: linear-gradient(var(--bs-secondary-bg), var(--bs-body-bg));
 }
 
 .btn-navbar {

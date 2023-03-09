@@ -4,8 +4,13 @@
     border-radius: 50%;
 }
 
+.title-bar {
+    @include center-flex;
+}
+
 #nameplate {
-    @include bio-panel-grid(42%);
+    @include bio-panel-grid();
+    margin: 10px 100px;
     grid-template-columns: 10vw 35vw;
     grid-template-rows: 1vw 3vw 2vw 1vw;
     h1 {

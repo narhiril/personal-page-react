@@ -1,7 +1,47 @@
 @import "../Shared/Themes/scss/shared.scss";
 
+.education-panel {
+    @include center-flex;
+}
+
 #education {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: [header] 2em [first] 1fr [second] 1fr;
+    h3 {
+        grid-row: header;
+        justify-self: center;
+    }
+}
+
+.education-grid {
     @include bio-panel-grid();
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    margin: 10px 5vw;
+    grid-template-columns: 15% 75%;
+    grid-template-rows: [title] 20% [list] 1fr;
+    .education-logo {
+        grid-column: 1;
+        grid-row: title / span 2;
+        max-width: 95%;
+        max-height: 95%;
+        min-width: 50%;
+        min-height: 50%;
+        justify-self: center;
+        align-self: center;
+    }
+    .education-label {
+        @include absolute-center-horizontal;
+        grid-column: 2;
+        grid-row: title;
+    }
+    .education-list {
+        grid-column: 2;
+        grid-row: list;
+        align-self: center;
+    }
+    #liftoff.btn-navbar {
+        border: none;
+        padding: 0.2rem 0.2rem;
+        translate: 0px -8%;
+    }
 }

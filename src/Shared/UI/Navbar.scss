@@ -1,7 +1,7 @@
 @import "../../Shared/Themes/scss/shared.scss";
 
 .navbar {
-    background-color: var(--bs-secondary-bg);
+    background-color: #{$navbar-shared-color};
     display: inline-block;
     width: 100%;
 }

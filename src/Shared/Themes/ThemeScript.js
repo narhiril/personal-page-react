@@ -19,7 +19,9 @@ export function getPreferredTheme() {
     if (storedTheme) {
         return storedTheme;
     } else {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 
+               window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 
+               'deepblue';
     }
 }
 

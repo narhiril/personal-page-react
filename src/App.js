@@ -3,6 +3,7 @@ import Navbar from './Shared/UI/Navbar';
 import TitleBar from './Homepage/TitleBar';
 import Footer from './Shared/UI/Footer';
 import {Helmet} from 'react-helmet';
+import EducationPanel from './Homepage/EducationPanel';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <meta charSet='utf-8' />
       </Helmet>
       <Navbar />
-      <TitleBar />
+        <TitleBar />
+        <EducationPanel />
       <Footer />
     </div>
   );

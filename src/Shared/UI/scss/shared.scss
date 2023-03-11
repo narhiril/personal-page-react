@@ -10,6 +10,19 @@ $navbar-item-height: 7vh;
 $navbar-shared-color: var(--bs-secondary-bg-subtle);
 $link-btn-padding: 5px;
 
+@mixin navbar-button {
+    clear: both;
+    padding-left: $link-btn-padding;
+    padding-right: $link-btn-padding;
+    --bs-btn-border-color: var(--bs-heading-color);
+    --bs-btn-color: var(--bs-heading-color);
+    font-size: 3vmin;
+    width: 6em;
+    white-space: nowrap;
+    overflow: hidden;
+    height: #{$navbar-item-height};
+}
+
 @mixin center-flex {
     display: flex;
     justify-content: center;

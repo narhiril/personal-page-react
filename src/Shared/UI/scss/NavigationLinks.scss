@@ -1,0 +1,16 @@
+@import "./shared.scss";
+
+#nav-links {
+    padding-left: 2.5vw;
+    float: left;
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: $link-btn-padding;
+}
+
+#nav-links .btn {
+    @include navbar-button;
+    border: 0px;
+}

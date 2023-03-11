@@ -8,6 +8,7 @@
 $nav-button-color: $headings-color or $body-emphasis-color;
 $navbar-item-height: 7vh;
 $navbar-shared-color: var(--bs-secondary-bg-subtle);
+$link-btn-padding: 5px;
 
 @mixin center-flex {
     display: flex;
@@ -18,6 +19,19 @@ $navbar-shared-color: var(--bs-secondary-bg-subtle);
     position: absolute;
     left: 50%;
     translate: -50% 0px;
+}
+
+@mixin absolute-center-vertical {
+    position: absolute;
+    top: 50%;
+    translate: 0px -50%;
+}
+
+@mixin absolute-center($mode: absolute) {
+    position: $mode;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
 }
 
 @mixin button-navbar-active($hover-text, $hover-bg, $active-bg: $hover-bg) {

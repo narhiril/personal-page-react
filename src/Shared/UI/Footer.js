@@ -1,4 +1,4 @@
-import "./Footer.scss";
+import "./scss/Footer.scss";
 import ReactLogo from "../../Assets/reactlogo.svg";
 import ThemeMenu from "../Themes/ThemeMenu";
 

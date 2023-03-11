@@ -1,7 +1,9 @@
-@import "../../Shared/Themes/scss/shared.scss";
+@import "./shared.scss";
 
 .navbar {
     background-color: #{$navbar-shared-color};
     display: inline-block;
     width: 100%;
+    position: fixed;
+    top: 0px;
 }

@@ -1,8 +1,8 @@
-import "./TitleBar.scss";
+import "./scss/TitleBar.scss";
 import placeholder from "../Assets/pfp.jpg";
 
-const TitleBar = () => {
-    return (
+const TitleBar = ({render}) => {
+    if (render) return (
         <div className='title-bar'>
           <div id="nameplate">
             <img id="profile-img" src={placeholder} alt="Profile picture"></img>

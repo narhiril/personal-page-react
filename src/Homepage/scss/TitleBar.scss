@@ -1,4 +1,4 @@
-@import "../Shared/Themes/scss/shared.scss";
+@import "../../Shared/UI/scss/shared.scss";
 
 #profile-img {
     border-radius: 50%;
@@ -6,6 +6,7 @@
 
 .title-bar {
     @include center-flex;
+    margin-top: $navbar-item-height + 2vh;
 }
 
 #nameplate {

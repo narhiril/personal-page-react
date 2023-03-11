@@ -1,15 +1,20 @@
-import "./EducationPanel.scss";
+import "./scss/EducationPanel.scss";
 import launchcode from "../Assets/launchcodeFull.png";
-//import webster from "../Assets/.png";
+import webster from "../Assets/websterlogo.svg";
+import { useState } from "react";
 
-const EducationPanel = () => {
-    return (  
+const EducationPanel = ({render}) => {
+    if (render) return (  
         <div className="education-panel">
+            <canvas id="education-canvas"></canvas>
             <div id="education" className="container">
-                <h3>I'm always learning</h3>
+                <h3>My Education</h3>
                 <div className="education-grid container">
                     <label id="lc-label" className="education-label">LaunchCode</label>
-                    <img id="lc-logo" className="education-logo" alt="LaunchCode logo" src={launchcode}></img>
+                    <img id="lc-logo" 
+                         className="education-logo" 
+                         alt="LaunchCode logo" 
+                         src={launchcode}></img>
                     <ul id="lc-list" className="education-list">
                         <li>March 2021 - February 2022</li>
                         <li>Women+ Web Development - C#/JavaScript</li>
@@ -18,7 +23,10 @@ const EducationPanel = () => {
                 </div>
                 <div className="education-grid container">
                     <label id="wu-label" className="education-label">Webster University</label>
-                    <img id="wu-logo" className="education-logo" alt="Webster University logo"></img>
+                    <img id="wu-logo" 
+                         className="education-logo" 
+                         alt="Webster University logo" 
+                         src={webster}></img>
                     <ul id="wu-list" className="education-list">
                         <li>Class of 2018</li>
                         <li>Bachelor of Arts - Game Design</li>

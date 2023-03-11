@@ -1,7 +1,14 @@
-@import "../Shared/Themes/scss/shared.scss";
+@import "../../Shared/UI/scss/shared.scss";
 
 .education-panel {
     @include center-flex;
+}
+
+#education-canvas {
+    width: 100vw;
+    height: 100vh;
+    @include absolute-center(fixed);
+    z-index: -1;
 }
 
 #education {
@@ -9,6 +16,7 @@
     grid-template-columns: 100%;
     grid-template-rows: [header] 2em [first] 1fr [second] 1fr;
     h3 {
+        font-size: xx-large;
         grid-row: header;
         justify-self: center;
     }
@@ -23,11 +31,12 @@
         grid-column: 1;
         grid-row: title / span 2;
         max-width: 95%;
-        max-height: 95%;
+        max-height: 75%;
         min-width: 50%;
         min-height: 50%;
         justify-self: center;
         align-self: center;
+        object-fit: scale-down;
     }
     .education-label {
         @include absolute-center-horizontal;
@@ -43,5 +52,17 @@
         border: none;
         padding: 0.2rem 0.2rem;
         translate: 0px -8%;
+    }
+}
+
+[data-bs-theme="redshift"] .education-grid {
+    #lc-logo, #wu-logo {
+        filter: contrast(4%) hue-rotate(2.6rad) brightness(185%);
+    }
+}
+
+[data-bs-theme="deepblue"], [data-bs-theme="dark"] .education-grid {
+    #lc-logo, #wu-logo {
+        filter: contrast(10%) hue-rotate(2.95rad) brightness(185%);
     }
 }

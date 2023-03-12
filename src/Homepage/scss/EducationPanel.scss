@@ -50,20 +50,38 @@
         align-self: center;
     }
     #liftoff.btn-navbar {
-        border: none;
         padding: 0.2rem 0.2rem;
         translate: 0px -8%;
+        animation: button-border-pulse 10s infinite;
+    }
+}
+
+@keyframes button-border-pulse {
+    0% {
+        border-color: rgba(255, 255, 255, 0);
+    }
+    25%{
+        border-color: rgba(255, 255, 255, 0);
+    }
+    50% {
+        border-color: rgba(255, 255, 255, 1);
+    }
+    75% {
+        border-color: rgba(255, 255, 255, 0);
+    }
+    100% {
+        border-color: rgba(255, 255, 255, 0);
     }
 }
 
 [data-bs-theme="redshift"] .education-grid {
     #lc-logo, #wu-logo {
-        filter: contrast(4%) hue-rotate(2.6rad) brightness(185%);
+        filter: contrast(8%) hue-rotate(2.6rad) brightness(185%);
     }
 }
 
 [data-bs-theme="deepblue"], [data-bs-theme="dark"] .education-grid {
     #lc-logo, #wu-logo {
-        filter: contrast(10%) hue-rotate(2.95rad) brightness(185%);
+        filter: contrast(4%) hue-rotate(2.95rad) brightness(185%);
     }
 }

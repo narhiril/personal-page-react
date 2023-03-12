@@ -48,10 +48,6 @@
     transform: rotateZ(10deg);
     visibility: hidden;
     opacity: 0%;
-    transition: bottom 2s ease-out 0s, 
-                opacity 2s ease-out 0s, 
-                visibility 2s ease-out 0s, 
-                transform 2s ease-out 0s;
 }
 
 .powered-by.active-footer {
@@ -60,10 +56,6 @@
     visibility: visible;
     transform: rotateZ(0deg);
     opacity: 100%;
-    transition: bottom 2s ease-in 0s, 
-                opacity 2s ease-in 0s, 
-                visibility 2s ease-in 0s, 
-                transform 2s ease-in 0s;
 }
 
 #footer-logo {
@@ -81,9 +73,23 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+    .powered-by {
+        transition: bottom 2s ease-out 0s, 
+                    opacity 2s ease-out 0s, 
+                    visibility 2s ease-out 0s, 
+                    transform 2s ease-out 0s;
+    }
+    .powered-by.active-footer {
+        transition: bottom 2s ease-in 0s, 
+                    opacity 2s ease-in 0s, 
+                    visibility 2s ease-in 0s, 
+                    transform 2s ease-in 0s;
+    }
+
     #footer-logo.react {
         animation: 10s ease-in-out 0.25s infinite react-spin;
     }
+    
     #footer-logo.three {
         transform-origin: 45% 45%;
         animation: 7s ease-in-out 0s infinite three-skew;

@@ -40,22 +40,72 @@
     }
 }
 
-#react-footer {
+.powered-by {
+    font-size: 3vh;
     position: fixed;
     right: 2%;
-    bottom: 0.5vh;
-    font-size: 3vh;
+    bottom: 10.5vh;
+    transform: rotateZ(10deg);
+    visibility: hidden;
+    opacity: 0%;
+    transition: bottom 2s ease-out 0s, 
+                opacity 2s ease-out 0s, 
+                visibility 2s ease-out 0s, 
+                transform 2s ease-out 0s;
 }
 
-#react-logo {
-    translate: 0px -0.5vh;
+.powered-by.active-footer {
+    font-size: 3vh;
+    bottom: 0.5vh;
+    visibility: visible;
+    transform: rotateZ(0deg);
+    opacity: 100%;
+    transition: bottom 2s ease-in 0s, 
+                opacity 2s ease-in 0s, 
+                visibility 2s ease-in 0s, 
+                transform 2s ease-in 0s;
+}
+
+#footer-logo {
     height: 4vh;
     pointer-events: none;
 }
 
+#footer-logo.react {
+    translate: 0px -0.5vh;
+}
+
+#footer-logo.three {
+    translate: 0.5vh -0.5vh;
+    filter: contrast(0%) brightness(200%);
+}
+
 @media (prefers-reduced-motion: no-preference) {
-    #react-logo {
+    #footer-logo.react {
         animation: 10s ease-in-out 0.25s infinite react-spin;
+    }
+    #footer-logo.three {
+        transform-origin: 45% 45%;
+        animation: 7s ease-in-out 0s infinite three-skew;
+        animation-direction: alternate-reverse;
+    }
+}
+
+@keyframes three-skew {
+    0% {
+        transform: rotate(0deg) skewX(0rad) skewY(0rad);
+    }
+    25% {
+        transform: rotate(-360deg) skewX(-0.7rad) skewY(-0.7rad);
+    }
+    50% {
+        transform: rotate(-720deg) skewX(0rad) skewY(0rad);
+    }
+    75% {
+        transform: rotate(-1080deg) skewX(0.7rad) skewY(0.7rad);
+    }
+    100% {
+        transform: rotate(-1440deg) skewX(0rad) skewY(0rad);
     }
 }
 

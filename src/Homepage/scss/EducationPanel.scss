@@ -2,6 +2,7 @@
 
 .education-panel {
     @include center-flex;
+    margin-top: $navbar-item-height + 12vh;
 }
 
 #education-canvas {
@@ -14,7 +15,7 @@
 #education {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: [header] 2em [first] 1fr [second] 1fr;
+    grid-template-rows: [header] 3em [first] 1fr [second] 1fr;
     h3 {
         font-size: xx-large;
         grid-row: header;

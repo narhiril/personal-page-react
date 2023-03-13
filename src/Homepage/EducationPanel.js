@@ -1,5 +1,8 @@
 import "./scss/EducationPanel.scss";
-import launchcode from "../Assets/launchcodeFull.png";
+import rocketFull from "../Assets/launchcodeRocket.png";
+import rocketNoFlame from "../Assets/launchcodeRocketNoFlame.png";
+import flame from "../Assets/launchcodeFlame.png";
+import launchcode from "../Assets/launchcodeCompleteLogo.png";
 import webster from "../Assets/websterlogo.svg";
 import { useState } from "react";
 

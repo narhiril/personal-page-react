@@ -84,6 +84,12 @@ $button-border-colors: ("light": $body-emphasis-color,
         align-self: center;
         object-fit: scale-down;
     }
+    .education-logo#lc-logo, .education-logo#lc-rocket {
+        @include opacity-fade(0.5s);
+    }
+    .invisible {
+        opacity: 0;
+    }
     .education-label {
         @include absolute-center-horizontal;
         grid-column: 2;
@@ -102,13 +108,13 @@ $button-border-colors: ("light": $body-emphasis-color,
 }
 
 [data-bs-theme="redshift"] .education-grid {
-    #lc-logo, #wu-logo {
+    #lc-logo, #wu-logo, #lc-rocket {
         filter: contrast(8%) hue-rotate(2.6rad) brightness(185%);
     }
 }
 
 [data-bs-theme="deepblue"], [data-bs-theme="dark"] .education-grid {
-    #lc-logo, #wu-logo {
+    #lc-logo, #wu-logo, #lc-rocket {
         filter: contrast(4%) hue-rotate(2.95rad) brightness(185%);
     }
 }

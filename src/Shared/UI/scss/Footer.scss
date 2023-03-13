@@ -91,7 +91,7 @@
     
     #footer-logo.three {
         transform-origin: 45% 45%;
-        animation: 7s ease-in-out 0s infinite three-skew;
+        animation: 35s ease-in-out 0s infinite three-skew;
         animation-direction: alternate-reverse;
     }
 }
@@ -101,13 +101,13 @@
         transform: rotate(0deg) skewX(0rad) skewY(0rad);
     }
     25% {
-        transform: rotate(-360deg) skewX(-0.7rad) skewY(-0.7rad);
+        transform: rotate(-360deg) skewX(-0.4rad) skewY(-0.4rad);
     }
     50% {
         transform: rotate(-720deg) skewX(0rad) skewY(0rad);
     }
     75% {
-        transform: rotate(-1080deg) skewX(0.7rad) skewY(0.7rad);
+        transform: rotate(-1080deg) skewX(0.4rad) skewY(0.4rad);
     }
     100% {
         transform: rotate(-1440deg) skewX(0rad) skewY(0rad);

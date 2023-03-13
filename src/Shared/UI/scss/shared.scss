@@ -16,6 +16,10 @@ $all-themes: ("light", "dark", "deepblue", "redshift");
     @return map.set($map, $key, $new);
 }
 
+@mixin opacity-fade($duration: 1s) {
+    transition: opacity $duration ease-in-out;
+}
+
 @mixin navbar-button {
     clear: both;
     padding-left: $link-btn-padding;

@@ -10,16 +10,25 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
     const buttonText = "Liftoff";
     const [launchText, setLaunchText] = useState(buttonText);
     const [readyForLaunch, setReadyForLaunch] = useState(true);
+    const [launchImage, setLaunchImage] = useState(rocketFull);
 
     async function launch() {
         const button = document.getElementById("liftoff");
+        const rocket = document.getElementById("lc-rocket");
+        const logo = document.getElementById("lc-logo");
         if (button.hasAttribute("active") || !readyForLaunch) return;
 
         //launch button updates for styling
         button.setAttribute("active", true);
         button.classList.add("active");
 
+        //fade out logo, fade in rocket
+        logo.classList.add("invisible");
+        rocket.classList.remove("invisible");
+
+
         //launch sequence
+        setLaunchImage(rocketNoFlame);
         await launchDisableButtons().then((value) => {
             console.log(value);
         });
@@ -32,9 +41,16 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
             launchEnableButtons().then((value) => {
                 console.log(value);
             });
+
+            //fade out rocket, fade in logo
+            logo.classList.remove("invisible");
+            rocket.classList.add("invisible");
+
+            //reset launch button and rocket
             button.removeAttribute("active");
             button.classList.remove("active");
             setLaunchText(buttonText);
+            setLaunchImage(rocketNoFlame);
         }, animationDuration + 500);
     }
 
@@ -49,19 +65,17 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
             if (mode) {
                 btn.setAttribute("disabled", true);
                 btn.classList.add("fade-color");
-                return new Promise(resolve => resolve('Buttons disabled for launch sequence'));
             }
             else {
                 btn.removeAttribute("disabled");
                 //delay to allow fade-in to finish
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        btn.classList.remove("fade-color");
-                        resolve("Buttons returned to normal");
-                    }, 2500);
-                });
+                setTimeout(() => {
+                    btn.classList.remove("fade-color");
+                }, 2500);
             }
         }
+        return mode ? new Promise(resolve => resolve('Buttons disabled for launch sequence')) :
+                      new Promise(resolve => resolve("Buttons returned to normal"));
     }
 
     async function launchCountdown(start) {
@@ -98,6 +112,10 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                 <h3>My Education</h3>
                 <div className="education-grid container">
                     <label id="lc-label" className="education-label">LaunchCode</label>
+                    <img id="lc-rocket" 
+                         className="education-logo" 
+                         alt="" 
+                         src={launchImage}></img>
                     <img id="lc-logo" 
                          className="education-logo" 
                          alt="LaunchCode logo" 

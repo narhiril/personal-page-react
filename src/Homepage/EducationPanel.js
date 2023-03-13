@@ -12,6 +12,15 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
     const [readyForLaunch, setReadyForLaunch] = useState(true);
     const [launchImage, setLaunchImage] = useState(rocketFull);
 
+    function preventOverlap() {
+        const rocket = document.getElementById("lc-rocket");
+        const logo = document.getElementById("lc-logo");
+        if (!logo.classList.contains("invisible")
+            && !rocket.classList.contains("invisible")) {
+                rocket.classList.add("invisible");
+            }
+    } 
+
     async function launch() {
         const button = document.getElementById("liftoff");
         const rocket = document.getElementById("lc-rocket");
@@ -113,7 +122,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                 <div className="education-grid container">
                     <label id="lc-label" className="education-label">LaunchCode</label>
                     <img id="lc-rocket" 
-                         className="education-logo" 
+                         className="education-logo invisible" 
                          alt="" 
                          src={launchImage}></img>
                     <img id="lc-logo" 

@@ -85,10 +85,7 @@ $button-border-colors: ("light": $body-emphasis-color,
         object-fit: scale-down;
     }
     .education-logo#lc-logo, .education-logo#lc-rocket {
-        @include opacity-fade(0.5s);
-    }
-    .invisible {
-        opacity: 0;
+        @include opacity-fade(0.65s);
     }
     .education-label {
         @include absolute-center-horizontal;

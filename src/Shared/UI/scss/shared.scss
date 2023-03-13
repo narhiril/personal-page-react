@@ -9,6 +9,12 @@ $nav-button-color: $headings-color or $body-emphasis-color;
 $navbar-item-height: 7vh;
 $navbar-shared-color: var(--bs-secondary-bg-subtle);
 $link-btn-padding: 5px;
+$all-themes: ("light", "dark", "deepblue", "redshift");
+
+@function mapToRgba($map, $key, $value, $opacity: 1) {
+    $new: rgba($value, $opacity);
+    @return map.set($map, $key, $new);
+}
 
 @mixin navbar-button {
     clear: both;
@@ -66,24 +72,11 @@ $link-btn-padding: 5px;
     background-image: linear-gradient(var(--bs-secondary-bg), var(--bs-body-bg));
 }
 
-.btn-navbar {
-    @include button-outline-variant($nav-button-color);
-}
-
-[data-bs-theme="dark"] .btn-navbar {
-    @include button-outline-variant($headings-color-dark);
-    @include button-navbar-active($headings-color-dark, $primary-bg-subtle-dark);
-}
-
-[data-bs-theme="deepblue"] .btn-navbar {
-    @include button-outline-variant($headings-color-deepblue);
-    @include button-navbar-active($headings-color-deepblue, 
-                                  mix($deepblue-fathom, $deepblue-regalia, 75%));
-}
-
-[data-bs-theme="redshift"] .btn-navbar {
-    @include button-outline-variant($headings-color-redshift);
-    @include button-navbar-active($headings-color-redshift, 
-                                  mix($body-bg-redshift, $redshift-inferno, 45%),
-                                  $redshift-inferno);
+@mixin transition-color($duration: 2s, $delay: 0s) {
+    transition: color $duration linear $delay,
+                border-color $duration linear $delay,
+                border $duration linear $delay,
+                background-color $duration linear $delay,
+                background-image $duration linear $delay,
+                opacity $duration linear $delay;
 }

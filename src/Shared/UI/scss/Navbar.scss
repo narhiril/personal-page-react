@@ -7,3 +7,30 @@
     position: fixed;
     top: 0px;
 }
+
+
+.btn-navbar {
+    @include button-outline-variant($nav-button-color);
+}
+
+[data-bs-theme="dark"] .btn-navbar {
+    @include button-outline-variant($headings-color-dark);
+    @include button-navbar-active($headings-color-dark, $primary-bg-subtle-dark);
+}
+
+[data-bs-theme="deepblue"] .btn-navbar {
+    @include button-outline-variant($headings-color-deepblue);
+    @include button-navbar-active($headings-color-deepblue, 
+                                  mix($deepblue-fathom, $deepblue-regalia, 75%));
+}
+
+[data-bs-theme="redshift"] .btn-navbar {
+    @include button-outline-variant($headings-color-redshift);
+    @include button-navbar-active($headings-color-redshift, 
+                                  mix($body-bg-redshift, $redshift-inferno, 45%),
+                                  $redshift-inferno);
+}
+
+.fade-color.btn[disabled], .fade-color.btn:not([disabled]) {
+    @include transition-color(1s, 0s);
+}

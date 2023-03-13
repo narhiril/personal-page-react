@@ -44,7 +44,6 @@ export function onThemeChange(choice) {
 window.addEventListener('DOMContentLoaded', () => {
     const pref = getPreferredTheme();
     setTheme(pref);
-    console.log(`Theme loaded: ${pref}`);
 });
 
 window.addEventListener('load', () => {

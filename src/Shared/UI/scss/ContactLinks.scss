@@ -27,6 +27,13 @@
     }
 }
 
+#contact-links .btn[disabled] {
+    color: contrast(var(--bs-heading-color), 45%);
+    border-color: contrast(var(--bs-heading-color), 45%);
+    pointer-events: none;
+    @include transition-color(1s, 0s);
+}
+
 /*
 #linkedin, #github {
     @include contact-logo-size();

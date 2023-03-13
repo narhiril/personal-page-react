@@ -1,4 +1,49 @@
+@use "sass:map";
 @import "../../Shared/UI/scss/shared.scss";
+
+$button-border-colors: ("light": $body-emphasis-color,
+                        "dark": $headings-color-dark,
+                        "deepblue": $headings-color-deepblue,
+                        "redshift": $headings-color-redshift);
+
+@mixin button-border-pulse($name, $rgba) {
+    @keyframes button-border-pulse-#{$name} {
+        0% {
+            border-color: rgba(0, 0, 0, 0);
+        }
+        50% {
+            border-color: $rgba;
+        }
+        100% {
+            border-color: rgba(0, 0, 0, 0);
+        }
+    }
+}
+
+@each $key, $value in $button-border-colors {
+    $button-border-colors: mapToRgba($button-border-colors, $key, $value);
+    @include button-border-pulse($key, $value);
+    [data-bs-theme="#{$key}"] {
+        .education-grid {
+            #liftoff.btn-navbar.btn:not(.active) {
+                border-color: rgba(0, 0, 0, 0);
+                animation: 5s ease-in-out 3s infinite normal button-border-pulse-#{$key};
+            }
+            #liftoff.btn-navbar.btn.active {
+                $color: map.get($button-border-colors, $key);
+                border-color: $color;
+                color: $color;
+                pointer-events: none;
+                @if $key == "redshift" {
+                    background-color: shade-color($redshift-antares, 50%);
+                }
+                @else {
+                    background-color: var(--bs-secondary-border-subtle);
+                }
+            }
+        }
+    }
+}
 
 .education-panel {
     @include center-flex;
@@ -50,27 +95,9 @@
         align-self: center;
     }
     #liftoff.btn-navbar {
+        width: 3.25rem;
         padding: 0.2rem 0.2rem;
         translate: 0px -8%;
-        animation: button-border-pulse 10s infinite;
-    }
-}
-
-@keyframes button-border-pulse {
-    0% {
-        border-color: rgba(255, 255, 255, 0);
-    }
-    25%{
-        border-color: rgba(255, 255, 255, 0);
-    }
-    50% {
-        border-color: rgba(255, 255, 255, 1);
-    }
-    75% {
-        border-color: rgba(255, 255, 255, 0);
-    }
-    100% {
-        border-color: rgba(255, 255, 255, 0);
     }
 }
 

@@ -11,8 +11,14 @@ $button-border-colors: ("light": $body-emphasis-color,
         0% {
             border-color: rgba(0, 0, 0, 0);
         }
+        40% {
+            border-color: rgba(0, 0, 0, 0);
+        }
         50% {
             border-color: $rgba;
+        }
+        60% {
+            border-color: rgba(0, 0, 0, 0);
         }
         100% {
             border-color: rgba(0, 0, 0, 0);
@@ -50,13 +56,6 @@ $button-border-colors: ("light": $body-emphasis-color,
     margin-top: $navbar-item-height + 12vh;
 }
 
-#education-canvas {
-    width: 100vw;
-    height: 100vh;
-    @include absolute-center(fixed);
-    z-index: -1;
-}
-
 #education {
     display: grid;
     grid-template-columns: 100%;
@@ -84,9 +83,9 @@ $button-border-colors: ("light": $body-emphasis-color,
         align-self: center;
         object-fit: scale-down;
     }
-    .education-logo#lc-logo, .education-logo#lc-rocket {
-        @include opacity-fade(0.65s);
-    }
+    //.education-logo#lc-logo, .education-logo#lc-rocket {
+        //@include opacity-fade(0.65s);
+    //}
     .education-label {
         @include absolute-center-horizontal;
         grid-column: 2;
@@ -110,7 +109,8 @@ $button-border-colors: ("light": $body-emphasis-color,
     }
 }
 
-[data-bs-theme="deepblue"], [data-bs-theme="dark"] .education-grid {
+[data-bs-theme="deepblue"] .education-grid, 
+[data-bs-theme="dark"] .education-grid {
     #lc-logo, #wu-logo, #lc-rocket {
         filter: contrast(4%) hue-rotate(2.95rad) brightness(185%);
     }

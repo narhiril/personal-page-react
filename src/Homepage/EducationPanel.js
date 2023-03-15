@@ -1,43 +1,49 @@
 import "./scss/EducationPanel.scss";
-import rocketFull from "../Assets/launchcodeRocket.png";
-import rocketNoFlame from "../Assets/launchcodeRocketNoFlame.png";
-import flame from "../Assets/launchcodeFlame.png";
 import launchcode from "../Assets/launchcodeCompleteLogo.png";
 import webster from "../Assets/websterlogo.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useWindowDimensions from "../Shared/Hooks/useWindowDimensions";
+import RocketCanvas from "../Effects/RocketCanvas";
 
 const EducationPanel = ({render, onFooterChange, animationDuration}) => {
-    const buttonText = "Liftoff";
-    const [launchText, setLaunchText] = useState(buttonText);
-    const [readyForLaunch, setReadyForLaunch] = useState(true);
-    const [launchImage, setLaunchImage] = useState(rocketFull);
+    const buttonText = "Liftoff",
+          windowCoords = useWindowDimensions(),
+          [windowSize, setWindowSize] = useState(windowCoords),
+          [launchText, setLaunchText] = useState(buttonText),
+          [readyForLaunch, setReadyForLaunch] = useState(true),
+          [rocketPosition, setRocketPosition] = useState();
 
-    function preventOverlap() {
-        const rocket = document.getElementById("lc-rocket");
-        const logo = document.getElementById("lc-logo");
-        if (!logo.classList.contains("invisible")
-            && !rocket.classList.contains("invisible")) {
-                rocket.classList.add("invisible");
+    useEffect(() => {
+        checkWindowResize();
+    });
+
+    async function checkWindowResize() {
+        if (windowSize[0] !== windowCoords[0] ||
+            windowSize[1] !== windowCoords[1]) {
+                setRocketPosition(updateRocketCoords());
+                setWindowSize(windowCoords);
             }
-    } 
+    }
+
+    async function updateRocketCoords() {
+        const element = document.getElementById("lc-logo");
+        if (element === null) {
+            return [0, 0];
+        } else {
+            return [element.getBoundingClientRect().left, 
+                    element.getBoundingClientRect().top];
+        }
+    }
 
     async function launch() {
         const button = document.getElementById("liftoff");
-        const rocket = document.getElementById("lc-rocket");
-        const logo = document.getElementById("lc-logo");
         if (button.hasAttribute("active") || !readyForLaunch) return;
 
         //launch button updates for styling
         button.setAttribute("active", true);
         button.classList.add("active");
 
-        //fade out logo, fade in rocket
-        logo.classList.add("invisible");
-        rocket.classList.remove("invisible");
-
-
         //launch sequence
-        setLaunchImage(rocketNoFlame);
         await launchDisableButtons().then((value) => {
             console.log(value);
         });
@@ -51,20 +57,15 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                 console.log(value);
             });
 
-            //fade out rocket, fade in logo
-            logo.classList.remove("invisible");
-            rocket.classList.add("invisible");
-
             //reset launch button and rocket
             button.removeAttribute("active");
             button.classList.remove("active");
             setLaunchText(buttonText);
-            setLaunchImage(rocketNoFlame);
         }, animationDuration + 500);
     }
 
     //alias for readability
-    async function launchEnableButtons() {
+    function launchEnableButtons() {
         return launchDisableButtons(false);
     }
 
@@ -88,7 +89,8 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
     }
 
     async function launchCountdown(start) {
-        if(!isNaN(start)) {
+        let isValid = !isNaN(start) && start > 0;
+        if(isValid) {
             const arr = [];
             for (let i = 0; i <= start; i++) {
                 arr.unshift(i);
@@ -100,7 +102,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                 return true;
             });
         }
-        return true;
+        return isValid;
     }
 
     async function launchFooter() {
@@ -116,15 +118,10 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
 
     if (render) return (  
         <div className="education-panel">
-            <canvas id="education-canvas"></canvas>
             <div id="education" className="container">
                 <h3>My Education</h3>
                 <div className="education-grid container">
                     <label id="lc-label" className="education-label">LaunchCode</label>
-                    <img id="lc-rocket" 
-                         className="education-logo invisible" 
-                         alt="" 
-                         src={launchImage}></img>
                     <img id="lc-logo" 
                          className="education-logo" 
                          alt="LaunchCode logo" 

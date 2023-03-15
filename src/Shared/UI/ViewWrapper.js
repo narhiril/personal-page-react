@@ -2,13 +2,13 @@ import Navbar from '../../Shared/UI/Navbar';
 import TitleBar from '../../Homepage/TitleBar';
 import Footer from '../../Shared/UI/Footer';
 import EducationPanel from "../../Homepage/EducationPanel";
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const ViewWrapper = () => {
-    const [showEducation, setShowEducation] = useState(false);
-    const [showTitle, setShowTitle] = useState(true);
-    const [footer, setFooter] = useState("react");
-    const launchAnimationDuration = 15000;
+    const [showEducation, setShowEducation] = useState(false),
+          [showTitle, setShowTitle] = useState(true),
+          [footer, setFooter] = useState("react"),
+          launchAnimationDuration = 15000;
 
     function renderEducation() {
         setShowTitle(false);
@@ -25,12 +25,16 @@ const ViewWrapper = () => {
         title: () => renderTitle()
     }
 
+    const changeFooter = useCallback((x) => {
+        setFooter(x);
+    }, [setFooter]);
+
     return (
         <div id="view-wrapper">
             <Navbar linkHandlers={toggles}/>
             <TitleBar render={showTitle} />
             <EducationPanel render={showEducation} 
-                            onFooterChange={(x) => setFooter(x)} 
+                            onFooterChange={changeFooter} 
                             animationDuration={launchAnimationDuration}/>
             <Footer poweredBy={footer}/>
         </div>

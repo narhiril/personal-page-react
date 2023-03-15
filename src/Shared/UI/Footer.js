@@ -15,6 +15,7 @@ const Footer = ({poweredBy}) => {
             const react = document.getElementById("react-footer");
             const three = document.getElementById("threejs-footer");
             switch (poweredBy) {
+                default:
                 case "react":
                     react.classList.add("active-footer");
                     three.classList.remove("active-footer");
@@ -24,7 +25,9 @@ const Footer = ({poweredBy}) => {
                     three.classList.add("active-footer");
                     break;
             }
-        } catch (e) {}
+        } catch (e) { 
+            console.error("Unable to find active footer element.");
+        }
     }
 
     return (

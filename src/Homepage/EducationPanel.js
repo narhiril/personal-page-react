@@ -1,43 +1,38 @@
 import "./scss/EducationPanel.scss";
 import launchcode from "../Assets/launchcodeCompleteLogo.png";
 import webster from "../Assets/websterlogo.svg";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useWindowDimensions from "../Shared/Hooks/useWindowDimensions";
 import RocketCanvas from "../Effects/RocketCanvas";
 
 const EducationPanel = ({render, onFooterChange, animationDuration}) => {
+
     const buttonText = "Liftoff",
-          windowCoords = useWindowDimensions(),
-          [windowSize, setWindowSize] = useState(windowCoords),
+          countFrom = 9,
+          windowDim = useWindowDimensions(),
           [launchText, setLaunchText] = useState(buttonText),
-          [readyForLaunch, setReadyForLaunch] = useState(true),
-          [rocketPosition, setRocketPosition] = useState();
+          [canLaunch, setCanLaunch] = useState(true),
+          [rocketPosition, setRocketPosition] = useState(getRocketStartCoords()),
+          [countdown, setCountdown] = useState(countFrom);
 
-    useEffect(() => {
-        checkWindowResize();
-    });
-
-    async function checkWindowResize() {
-        if (windowSize[0] !== windowCoords[0] ||
-            windowSize[1] !== windowCoords[1]) {
-                setRocketPosition(updateRocketCoords());
-                setWindowSize(windowCoords);
-            }
-    }
-
-    async function updateRocketCoords() {
+    function getRocketStartCoords() {
         const element = document.getElementById("lc-logo");
         if (element === null) {
-            return [0, 0];
+            //if something has gone horribly wrong, draw off screen
+            return {x: -2*windowDim[0], 
+                    y: -2*windowDim[1]};
         } else {
-            return [element.getBoundingClientRect().left, 
-                    element.getBoundingClientRect().top];
+            return { x: element.getBoundingClientRect().left, 
+                     y: element.getBoundingClientRect().top };
         }
     }
 
     async function launch() {
         const button = document.getElementById("liftoff");
-        if (button.hasAttribute("active") || !readyForLaunch) return;
+        if (button.hasAttribute("active") || !canLaunch) return;
+
+        //begin sequence
+        setCanLaunch(false);
 
         //launch button updates for styling
         button.setAttribute("active", true);
@@ -48,19 +43,20 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
             console.log(value);
         });
         launchFooter();
-        launchCountdown(9);
+        launchCountdown(countFrom);
 
         //post-launch cleanup
-        //setReadyForLaunch(false);
         setTimeout(() => {
             launchEnableButtons().then((value) => {
                 console.log(value);
             });
 
-            //reset launch button and rocket
+            //reset launch button, countdown, and flag for rocket canvas
             button.removeAttribute("active");
             button.classList.remove("active");
             setLaunchText(buttonText);
+            setCountdown(countFrom);
+            setCanLaunch(true);
         }, animationDuration + 500);
     }
 
@@ -98,6 +94,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
             arr.map((num, index) => {
                 setTimeout(() => {
                    setLaunchText(index === start ? buttonText : num);
+                   setCountdown(index);
                 }, (index+1) * 1200);
                 return true;
             });
@@ -118,6 +115,10 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
 
     if (render) return (  
         <div className="education-panel">
+            <RocketCanvas rocketStartCoords={getRocketStartCoords()} 
+                          windowSize={windowDim} 
+                          enabled={!canLaunch}
+                          count={countFrom} />
             <div id="education" className="container">
                 <h3>My Education</h3>
                 <div className="education-grid container">

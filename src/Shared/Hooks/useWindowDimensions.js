@@ -10,6 +10,8 @@ function useWindowDimensions() {
 
     useEffect(() => {
         window.addEventListener('resize', registerResize);
+        //catch the initial window size
+        registerResize();
         return () => {
             window.removeEventListener('resize', registerResize);
         }

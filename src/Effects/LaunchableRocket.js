@@ -26,7 +26,7 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
             time.current += dt * 1000;
             if (time.current >= frameTime) {
                 if (currentFrame.current + 1 > frameCount - 1) {
-                    //loop the last 4 frames
+                    //random cycle the last 5 frames
                     currentFrame.current = Math.floor(Math.random() * 5) + 7;
                 } else {
                     currentFrame.current += 1;
@@ -59,7 +59,7 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
     flameAnimationTx.magFilter = THREE.NearestFilter;
     flameAnimationTx.repeat.set(1 / frames, 1);
 
-    useFlameAnimation(flameAnimationTx, 290, frames);
+    useFlameAnimation(flameAnimationTx, 150, frames);
 
     return (  
         <group>

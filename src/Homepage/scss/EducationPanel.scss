@@ -78,6 +78,7 @@ $button-border-colors: ("light": $body-emphasis-color,
         justify-self: center;
         align-self: center;
         object-fit: scale-down;
+        margin-top: 10px;
     }
     .education-logo:not(#lc-logo-container) {
         max-width: 95%;
@@ -92,9 +93,6 @@ $button-border-colors: ("light": $body-emphasis-color,
         max-height: 75%;
         min-width: 50%;
         min-height: 50%;
-    }
-    #rocket-canvas {
-        position: absolute;
     }
     //.education-logo#lc-logo, .education-logo#lc-rocket {
         //@include opacity-fade(0.65s);

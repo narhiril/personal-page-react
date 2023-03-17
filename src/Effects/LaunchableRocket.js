@@ -2,7 +2,7 @@ import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import { useRef } from "react";
 
-const LaunchableRocket = ({scalar, count, zCoord, reset}) => {
+const LaunchableRocket = ({scalar, count, zCoord, reset, interval, tPlus}) => {
 
     const root = document.getElementsByTagName("html")[0],
           theme = root.getAttribute("data-bs-theme") || "light",
@@ -21,12 +21,22 @@ const LaunchableRocket = ({scalar, count, zCoord, reset}) => {
                     };
 
     function useFlameAnimation(tx, frameTime, frameCount) {
-        const time = useRef(0),
-              currentFrame = useRef(0);
+        const time = useRef(-interval*(count+1) - 150),
+              currentFrame = useRef(0),
+              hasFired = useRef(false);
         useFrame((_, dt) => {
             time.current += dt * 1000;
+            if (!hasFired.current && time.current > 0) {
+                hasFired.current = true;
+                //flame.current.material.opacity = 1;
+            }
             if (time.current >= frameTime) {
-                if (reset) currentFrame.current = 0;
+                if (reset) {
+                    currentFrame.current = 0;
+                    time.current = -interval*(count+1) - 150;
+                    hasFired.current = false;
+                    //flame.current.material.opacity = 0;
+                }
                 if (currentFrame.current + 1 > frameCount - 1) {
                     //random cycle the last 5 frames
                     currentFrame.current = Math.floor(Math.random() * 5) + 7;
@@ -101,8 +111,7 @@ const LaunchableRocket = ({scalar, count, zCoord, reset}) => {
                 transparent
             />
             </mesh>
-            <sprite visible 
-                    args={[1, 3]}
+            <sprite args={[1, 3]}
                     scale={scalar} 
                     ref={flame}
                     position={[0, 

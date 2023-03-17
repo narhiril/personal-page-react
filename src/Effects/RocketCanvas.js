@@ -3,12 +3,10 @@ import { Canvas } from "@react-three/fiber";
 import LaunchableRocket from "./LaunchableRocket";
 import * as THREE from 'three';
 import { useRef, useEffect } from 'react';
-import useWindowDimensions from "../Shared/Hooks/useWindowDimensions";
 
-const RocketCanvas = ({rocketInfo, enabled, count, interval}) => {
+const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
     const scalar = 1,
           zCoord = 0,
-          windowDim = useWindowDimensions(),
           ref = useRef(),
           element = ref.current;
     
@@ -17,7 +15,6 @@ const RocketCanvas = ({rocketInfo, enabled, count, interval}) => {
     function useMovingCanvas(i) {
         const time = useRef(0),
               offset = useRef(new THREE.Vector3(0, 0, 0));
-
         useEffect(() => {
             time.current += 1000;
             if (time.current >= i) {
@@ -43,16 +40,22 @@ const RocketCanvas = ({rocketInfo, enabled, count, interval}) => {
         return infoObj;
     }
 
+    function getMinimumScale(info) {
+        return info.scaleX >= info.scaleY ? info.scaleY : info.scaleX;
+    }
+
     useMovingCanvas(interval);
 
     return (  
         <div ref={ref} id="rocket-canvas" hidden={!enabled}>
-            <Canvas camera={{position: [0, 0, 0.5/rocketInfo.scaleY]}}>
+            <Canvas camera={{position: [0, 0, 3 + (0.4*getMinimumScale(rocketInfo))]}}>
                 <primitive object={new THREE.AxesHelper(1)} />
                 <LaunchableRocket scalar={scalar} 
                                   count={count} 
                                   zCoord={zCoord}
                                   reset={!enabled}
+                                  interval={interval}
+                                  tPlus={tPlus}
                 />
                 <ambientLight 
                     intensity={0.2} 

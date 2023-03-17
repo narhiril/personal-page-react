@@ -10,26 +10,29 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
     const buttonText = "Liftoff",
           countFrom = 9,
           interval = 1200,
+          scaleFactor = 350,
           windowDim = useWindowDimensions(),
           [launchText, setLaunchText] = useState(buttonText),
           [canLaunch, setCanLaunch] = useState(true),
-          [countdown, setCountdown] = useState(countFrom);
+          [countdown, setCountdown] = useState(countFrom),
+          tPlus = animationDuration - (interval*countFrom);
 
     useEffect(() => {
-        makeTheCanvasActuallyWorkProperly();
+        adjustCanvas(scaleFactor);
     });
 
-    function makeTheCanvasActuallyWorkProperly() {
+    function adjustCanvas(extraScaleFactor = 0) {
         const logoElement = document.getElementById("lc-logo"),
               canvasContainer = document.getElementById("rocket-canvas");
         
         if (logoElement !== null && canvasContainer !== null) {
-            const logoDimensions = logoElement.getBoundingClientRect();
-            canvasContainer.style.left = `${logoDimensions.left}px`;
-            canvasContainer.style.top = `${logoDimensions.top}px`;
-            canvasContainer.style.width = `${logoDimensions.width}px`;
-            canvasContainer.style.height = `${logoDimensions.height}px`;
-            console.log("useEffect fired");
+            const logoDimensions = logoElement.getBoundingClientRect(),
+                  offset = extraScaleFactor / 2;
+
+            canvasContainer.style.left = `${logoDimensions.left - offset}px`;
+            canvasContainer.style.top = `${logoDimensions.top - offset}px`;
+            canvasContainer.style.width = `${logoDimensions.width + extraScaleFactor}px`;
+            canvasContainer.style.height = `${logoDimensions.height + extraScaleFactor}px`;
         }
     }
 
@@ -43,10 +46,8 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
             const rect = element.getBoundingClientRect();
             return { x: rect.left, 
                      y: rect.top,
-                     left: getComputedStyle(element).left,
-                     top: getComputedStyle(element).top,
-                     scaleX: rect.x / 512,
-                     scaleY: rect.y / 512 };
+                     scaleX: (rect.width + scaleFactor) / rect.width,
+                     scaleY: (rect.height + scaleFactor) / rect.height};
         }
     }
 
@@ -150,6 +151,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                                   enabled={!canLaunch}
                                   count={countFrom}
                                   interval={interval}
+                                  tPlus={tPlus}
                                   className="rocket-effect-component"
                                   />
                     </div>

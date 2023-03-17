@@ -8,7 +8,7 @@ const ViewWrapper = () => {
     const [showEducation, setShowEducation] = useState(false),
           [showTitle, setShowTitle] = useState(true),
           [footer, setFooter] = useState("react"),
-          launchAnimationDuration = 15000;
+          launchAnimationDuration = 20000;
 
     function renderEducation() {
         setShowTitle(false);

@@ -15,6 +15,7 @@ const RocketCanvas = ({rocketInfo, enabled, count}) => {
                                   startPosition={rocketInfo} 
                                   count={count} 
                                   zCoord={zCoord}
+                                  reset={!enabled}
                 />
                 <ambientLight 
                     intensity={0.2} 

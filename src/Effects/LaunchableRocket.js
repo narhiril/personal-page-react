@@ -2,7 +2,7 @@ import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import { useRef } from "react";
 
-const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
+const LaunchableRocket = ({scalar, startPosition, count, zCoord, reset}) => {
 
     const root = document.getElementsByTagName("html")[0],
           theme = root.getAttribute("data-bs-theme") || "light",
@@ -27,6 +27,7 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
         useFrame((_, dt) => {
             time.current += dt * 1000;
             if (time.current >= frameTime) {
+                if (reset) currentFrame.current = 0;
                 if (currentFrame.current + 1 > frameCount - 1) {
                     //random cycle the last 5 frames
                     currentFrame.current = Math.floor(Math.random() * 5) + 7;
@@ -94,7 +95,7 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
     useFlameAnimation(flameAnimationTx, 150, frames);
 
     return (  
-        <group ref={group} position={[rocketPosition.current.x,rocketPosition.current.y,zCoord]}>
+        <group ref={group} position={rocketPosition.current}>
             <mesh visible 
                   scale={scalar} 
                   ref={rocket}

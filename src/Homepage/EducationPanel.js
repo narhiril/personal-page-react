@@ -1,7 +1,7 @@
 import "./scss/EducationPanel.scss";
 import launchcode from "../Assets/launchcodeCompleteLogo.png";
 import webster from "../Assets/websterlogo.svg";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import useWindowDimensions from "../Shared/Hooks/useWindowDimensions";
 import RocketCanvas from "../Effects/RocketCanvas";
 
@@ -9,10 +9,29 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
 
     const buttonText = "Liftoff",
           countFrom = 9,
+          interval = 1200,
           windowDim = useWindowDimensions(),
           [launchText, setLaunchText] = useState(buttonText),
           [canLaunch, setCanLaunch] = useState(true),
           [countdown, setCountdown] = useState(countFrom);
+
+    useEffect(() => {
+        makeTheCanvasActuallyWorkProperly();
+    });
+
+    function makeTheCanvasActuallyWorkProperly() {
+        const logoElement = document.getElementById("lc-logo"),
+              canvasContainer = document.getElementById("rocket-canvas");
+        
+        if (logoElement !== null && canvasContainer !== null) {
+            const logoDimensions = logoElement.getBoundingClientRect();
+            canvasContainer.style.left = `${logoDimensions.left}px`;
+            canvasContainer.style.top = `${logoDimensions.top}px`;
+            canvasContainer.style.width = `${logoDimensions.width}px`;
+            canvasContainer.style.height = `${logoDimensions.height}px`;
+            console.log("useEffect fired");
+        }
+    }
 
     function getRocketProperties() {
         const element = document.getElementById("lc-logo");
@@ -21,10 +40,13 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
             return {x: -2*windowDim.width, 
                     y: -2*windowDim.height};
         } else {
-            return { x: element.getBoundingClientRect().left, 
-                     y: element.getBoundingClientRect().top,
-                     scaleX: element.width / 512,
-                     scaleY: element.height / 512 };
+            const rect = element.getBoundingClientRect();
+            return { x: rect.left, 
+                     y: rect.top,
+                     left: getComputedStyle(element).left,
+                     top: getComputedStyle(element).top,
+                     scaleX: rect.x / 512,
+                     scaleY: rect.y / 512 };
         }
     }
 
@@ -96,7 +118,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                 setTimeout(() => {
                    setLaunchText(index === start ? buttonText : num);
                    setCountdown(index);
-                }, (index+1) * 1200);
+                }, (index+1) * interval);
                 return true;
             });
         }
@@ -116,17 +138,21 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
 
     if (render) return (  
         <div className="education-panel">
-            <RocketCanvas rocketInfo={getRocketProperties()} 
-                          enabled={!canLaunch}
-                          count={countFrom} />
             <div id="education" className="container">
                 <h3>My Education</h3>
                 <div className="education-grid container">
                     <label id="lc-label" className="education-label">LaunchCode</label>
-                    <img id="lc-logo" 
-                         className="education-logo" 
+                    <div id="lc-logo-container" className="education-logo">
+                    <img id="lc-logo"
                          alt="LaunchCode logo" 
                          src={launchcode}></img>
+                    <RocketCanvas rocketInfo={getRocketProperties()} 
+                                  enabled={!canLaunch}
+                                  count={countFrom}
+                                  interval={interval}
+                                  className="rocket-effect-component"
+                                  />
+                    </div>
                     <ul id="lc-list" className="education-list">
                         <li>March 2021 - February 2022</li>
                         <li>Women+ Web Development - C#/JavaScript</li>

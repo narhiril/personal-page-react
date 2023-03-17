@@ -2,7 +2,7 @@ import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import { useRef } from "react";
 
-const LaunchableRocket = ({scalar, startPosition, count, zCoord, reset}) => {
+const LaunchableRocket = ({scalar, count, zCoord, reset}) => {
 
     const root = document.getElementsByTagName("html")[0],
           theme = root.getAttribute("data-bs-theme") || "light",
@@ -12,8 +12,7 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord, reset}) => {
           {camera, gl} = useThree(),
           frames = 12,
           flameOffset = -0.575 * scalar,
-          sceneStartCoords = toWorldCoords(startPosition),
-          rocketPosition = useRef(new THREE.Vector3(sceneStartCoords.x, sceneStartCoords.y, zCoord));
+          sceneStartCoords = new THREE.Vector3(0, 0, zCoord);
 
     const textures = {
                         rocket: "./textures/launchcodeRocketNoFlame.png", 
@@ -63,10 +62,6 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord, reset}) => {
         return position;
     }
 
-    function toScreenCoords() {
-
-    }
-
     function themeColor(th) {
         switch (th) {
             case "dark":
@@ -80,10 +75,6 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord, reset}) => {
         }
     }
 
-    function cleanup() {
-        flameAnimationTx.offset.x = 0;
-    }
-
     const rocketTx = useLoader(THREE.TextureLoader, textures.rocket),
           logoBaseTx = useLoader(THREE.TextureLoader, textures.logoBase),
           flameAnimationTx = useLoader(THREE.TextureLoader, textures.flame);
@@ -95,7 +86,7 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord, reset}) => {
     useFlameAnimation(flameAnimationTx, 150, frames);
 
     return (  
-        <group ref={group} position={rocketPosition.current}>
+        <group ref={group} position={sceneStartCoords}>
             <mesh visible 
                   scale={scalar} 
                   ref={rocket}

@@ -75,13 +75,26 @@ $button-border-colors: ("light": $body-emphasis-color,
     .education-logo {
         grid-column: 1;
         grid-row: title / span 2;
+        justify-self: center;
+        align-self: center;
+        object-fit: scale-down;
+    }
+    .education-logo:not(#lc-logo-container) {
         max-width: 95%;
         max-height: 75%;
         min-width: 50%;
         min-height: 50%;
-        justify-self: center;
-        align-self: center;
-        object-fit: scale-down;
+    }
+    #lc-logo {
+        width: auto;
+        height: auto;
+        max-width: 95%;
+        max-height: 75%;
+        min-width: 50%;
+        min-height: 50%;
+    }
+    #rocket-canvas {
+        position: absolute;
     }
     //.education-logo#lc-logo, .education-logo#lc-rocket {
         //@include opacity-fade(0.65s);

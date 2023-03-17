@@ -1,4 +1,4 @@
-import { useLoader, useFrame } from "@react-three/fiber";
+import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import { useRef } from "react";
 
@@ -8,14 +8,16 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
           theme = root.getAttribute("data-bs-theme") || "light",
           rocket = useRef(),
           flame = useRef(),
-          camera = useRef(),
+          group = useRef(),
+          {camera, gl} = useThree(),
           frames = 12,
-          flameOffset = startPosition.y + 256;
+          flameOffset = -0.575 * scalar,
+          sceneStartCoords = toWorldCoords(startPosition),
+          rocketPosition = useRef(new THREE.Vector3(sceneStartCoords.x, sceneStartCoords.y, zCoord));
 
     const textures = {
                         rocket: "./textures/launchcodeRocketNoFlame.png", 
                         flame: "./textures/animation_rocketflame_12frame_512w_256offset.png",
-                        logoTop: "./textures/launchcodeRocket.png",
                         logoBase: "./textures/launchcodeBase.png"
                     };
 
@@ -37,6 +39,33 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
         });
     }
 
+    function toWorldCoords(coords) {
+        const element = gl.domElement,
+              halfWidth = element.width / 2,
+              halfHeight = element.height / 2,
+              vector = new THREE.Vector3(),
+              position = new THREE.Vector3();
+
+        vector.set(-(coords.x / halfWidth) * 2 + 1,
+                   (coords.y / halfHeight) * 2 - 1,
+                   0.5);
+
+        vector.unproject(camera)
+              .sub(camera.position)
+              .normalize();
+        
+        position.copy(camera.position)
+                .add(vector.multiplyScalar(camera.position.z / vector.z));
+
+        console.log(`world coords: ${position.x}, ${position.y}, ${position.z}`);
+        
+        return position;
+    }
+
+    function toScreenCoords() {
+
+    }
+
     function themeColor(th) {
         switch (th) {
             case "dark":
@@ -50,8 +79,11 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
         }
     }
 
+    function cleanup() {
+        flameAnimationTx.offset.x = 0;
+    }
+
     const rocketTx = useLoader(THREE.TextureLoader, textures.rocket),
-          logoTopTx = useLoader(THREE.TextureLoader, textures.logoTop),
           logoBaseTx = useLoader(THREE.TextureLoader, textures.logoBase),
           flameAnimationTx = useLoader(THREE.TextureLoader, textures.flame);
 
@@ -62,11 +94,11 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
     useFlameAnimation(flameAnimationTx, 150, frames);
 
     return (  
-        <group>
+        <group ref={group} position={[rocketPosition.current.x,rocketPosition.current.y,zCoord]}>
             <mesh visible 
                   scale={scalar} 
                   ref={rocket}
-                  position={[startPosition.x, startPosition.y, zCoord]}>
+                  position={[0, 0, 0]}>
             <planeGeometry 
                 args={[1, 1]}
             />
@@ -81,7 +113,9 @@ const LaunchableRocket = ({scalar, startPosition, count, zCoord}) => {
                     args={[1, 3]}
                     scale={scalar} 
                     ref={flame}
-                    position={[-8.22, 0.7, zCoord]}>
+                    position={[0, 
+                               flameOffset, 
+                               0]}>
                 <spriteMaterial 
                     transparent 
                     map={flameAnimationTx} 

@@ -12,18 +12,19 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
           windowDim = useWindowDimensions(),
           [launchText, setLaunchText] = useState(buttonText),
           [canLaunch, setCanLaunch] = useState(true),
-          [rocketPosition, setRocketPosition] = useState(getRocketStartCoords()),
           [countdown, setCountdown] = useState(countFrom);
 
-    function getRocketStartCoords() {
+    function getRocketProperties() {
         const element = document.getElementById("lc-logo");
         if (element === null) {
             //if something has gone horribly wrong, draw off screen
-            return {x: -2*windowDim[0], 
-                    y: -2*windowDim[1]};
+            return {x: -2*windowDim.width, 
+                    y: -2*windowDim.height};
         } else {
             return { x: element.getBoundingClientRect().left, 
-                     y: element.getBoundingClientRect().top };
+                     y: element.getBoundingClientRect().top,
+                     scaleX: element.width / 512,
+                     scaleY: element.height / 512 };
         }
     }
 
@@ -115,8 +116,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
 
     if (render) return (  
         <div className="education-panel">
-            <RocketCanvas rocketStartCoords={getRocketStartCoords()} 
-                          windowSize={windowDim} 
+            <RocketCanvas rocketInfo={getRocketProperties()} 
                           enabled={!canLaunch}
                           count={countFrom} />
             <div id="education" className="container">

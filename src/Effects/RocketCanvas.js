@@ -1,18 +1,18 @@
 import "./scss/EffectsCanvas.scss";
-import { ReactDOM } from "react";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import LaunchableRocket from "./LaunchableRocket";
-import * as THREE from "three";
+import * as THREE from 'three';
 
-const RocketCanvas = ({rocketStartCoords, windowSize, enabled, count}) => {
+const RocketCanvas = ({rocketInfo, enabled, count}) => {
     const scalar = 1,
           zCoord = 0;
 
     return (  
         <div className="rocket-canvas three-canvas" hidden={!enabled}>
-            <Canvas orthographic camera={{zoom: 50, position: [0, 0, 100]}}>
+            <Canvas camera={{position: [0, 0, 5]}}>
+                <primitive object={new THREE.AxesHelper(1)} />
                 <LaunchableRocket scalar={scalar} 
-                                  startPosition={rocketStartCoords} 
+                                  startPosition={rocketInfo} 
                                   count={count} 
                                   zCoord={zCoord}
                 />
@@ -23,5 +23,5 @@ const RocketCanvas = ({rocketStartCoords, windowSize, enabled, count}) => {
         </div>
     );
 }
- 
+
 export default RocketCanvas;

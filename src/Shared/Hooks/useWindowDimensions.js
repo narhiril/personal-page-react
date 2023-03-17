@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 
 
 function useWindowDimensions() {
-    const [dimensions, setDimensions] = useState([0, 0]);
+    const [dimensions, setDimensions] = useState({width: 0, height: 0});
 
     function registerResize() {
-        setDimensions([window.innerWidth, window.innerHeight]);
+        setDimensions({width: window.innerWidth, height: window.innerHeight});
     }
 
     useEffect(() => {

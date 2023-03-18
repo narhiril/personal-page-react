@@ -26,16 +26,16 @@ const LaunchableRocket = ({scalar, count, zCoord, reset, interval, tPlus}) => {
               hasFired = useRef(false);
         useFrame((_, dt) => {
             time.current += dt * 1000;
-            if (!hasFired.current && time.current > 0) {
+            if (!hasFired.current && time.current > 0 && flame.current.material.opacity === 0) {
                 hasFired.current = true;
-                //flame.current.material.opacity = 1;
+                flame.current.material.opacity = 1;
             }
             if (time.current >= frameTime) {
                 if (reset) {
                     currentFrame.current = 0;
                     time.current = -interval*(count+1) - 150;
                     hasFired.current = false;
-                    //flame.current.material.opacity = 0;
+                    flame.current.material.opacity = 0;
                 }
                 if (currentFrame.current + 1 > frameCount - 1) {
                     //random cycle the last 5 frames
@@ -119,6 +119,7 @@ const LaunchableRocket = ({scalar, count, zCoord, reset, interval, tPlus}) => {
                                0]}>
                 <spriteMaterial 
                     transparent 
+                    opacity={0}
                     map={flameAnimationTx} 
                 />
             </sprite>

@@ -51,12 +51,30 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
         }
     }
 
+    async function toggleRocketVisible(isVisible = true) {
+        const logoElement = document.getElementById("lc-logo"),
+              rocketFxElement = document.getElementById("rocket-canvas"),
+              found = logoElement !== null && rocketFxElement !== null;
+        if (found) {
+            if (isVisible) {
+                logoElement.style.opacity = 1;
+                rocketFxElement.style.opacity = 0;
+            } else {
+                logoElement.style.opacity = 0;
+                rocketFxElement.style.opacity = 1;
+            }
+        }
+        console.log(`Crossfade elements found: ${found}`);
+        return found;
+    }
+
     async function launch() {
         const button = document.getElementById("liftoff");
         if (button.hasAttribute("active") || !canLaunch) return;
 
         //begin sequence
         setCanLaunch(false);
+        toggleRocketVisible(false);
 
         //launch button updates for styling
         button.setAttribute("active", true);
@@ -81,6 +99,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
             setLaunchText(buttonText);
             setCountdown(countFrom);
             setCanLaunch(true);
+            toggleRocketVisible(true);
         }, animationDuration + 500);
     }
 
@@ -149,10 +168,11 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                          src={launchcode}></img>
                     <RocketCanvas rocketInfo={getRocketProperties()} 
                                   enabled={!canLaunch}
+                                  opacity={0}
                                   count={countFrom}
                                   interval={interval}
                                   tPlus={tPlus}
-                                  className="rocket-effect-component"
+                                  id="rocket-effect-component"
                                   />
                     </div>
                     <ul id="lc-list" className="education-list">

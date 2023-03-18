@@ -94,9 +94,9 @@ $button-border-colors: ("light": $body-emphasis-color,
         min-width: 50%;
         min-height: 50%;
     }
-    //.education-logo#lc-logo, .education-logo#lc-rocket {
-        //@include opacity-fade(0.65s);
-    //}
+    .education-logo, #rocket-effect-component {
+        @include opacity-fade(1.2s);
+    }
     .education-label {
         @include absolute-center-horizontal;
         grid-column: 2;

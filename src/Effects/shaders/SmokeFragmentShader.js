@@ -1,16 +1,16 @@
 //GLSL fragment shader, made with the help of https://glslsandbox.com/
 
 const smokeFragmentShader = `
+//FRAGMENT SHADER
 
 precision mediump float;
 
-uniform float time;
-uniform vec2 mouse;
-uniform vec2 resolution;
-uniform sampler2D backbuffer;
+uniform float u_time;
+uniform vec2 u_mouse;
+uniform vec2 u_resolution;
+uniform sampler2D u_backbuffer;
 
-const float bg = 0.0;
-vec4 background = vec4(bg, bg, bg, 0.0);
+vec4 background = vec4(0.0, 0.0, 0.0, 0.05);
 vec4 start = vec4(0.99, 0.87, 0.1, 1.0);
 
 float random(vec2 vector) {
@@ -18,10 +18,12 @@ float random(vec2 vector) {
 }
 
 vec4 flameToSmoke(vec4 hue){
-	//near starting color
+
+	//is yellow (start color)
 	if (hue.g > 0.65 && hue.b < 0.15) {
 		//yellow => orange
 		hue.g -= 0.075;
+
 	//is orange
 	} else if (hue.g > 0.12 && hue.b < 0.25) {
 		//orange => red
@@ -30,6 +32,7 @@ vec4 flameToSmoke(vec4 hue){
 		if (hue.b < 0.35) {
 			hue.b += 0.009;
 		}
+
 	//is red
 	} else {
 		//red => white
@@ -37,25 +40,25 @@ vec4 flameToSmoke(vec4 hue){
 		hue.g += 0.065;
 		hue.b += 0.077;
 	}
+
 	return hue;
 }
 
 void main( void ) {
 
-	vec2 position = ( gl_FragCoord.xy / resolution.xy );
-	
-	vec4 prevFrame = texture2D(backbuffer, position);
+	vec2 position = vec2(gl_FragCoord.x / u_resolution.x, gl_FragCoord.y / u_resolution.y);
+	vec4 prevFrame = texture2D(u_backbuffer, position);
 	vec4 hue;
 	
 	bool isBackground = prevFrame.a < background.a+0.15;
 	
-	float rng = random(mouse);
+	float rng = random(u_mouse);
 	float skew = 2.75*fract(rng);
+
 	//size variance
-	float dx = length(position-mouse)-(0.007*abs(rng));
+	float dx = length(position-u_mouse)-(0.007*abs(rng));
 	
-	//on cursor
-	if (dx < 0.0145) {
+	if (dx < 1.0) {
 		hue = vec4(start.rgb, 1.0);
 	//near cursor and not background
 	} else if (dx < 0.018 && !isBackground) {

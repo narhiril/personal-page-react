@@ -2,14 +2,27 @@ import "./scss/EffectsCanvas.scss";
 import { Canvas } from "@react-three/fiber";
 import LaunchableRocket from "./LaunchableRocket";
 import * as THREE from 'three';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
+import { useFBO } from "@react-three/drei";
 
 const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
     const scalar = 1,
           zCoord = 0,
-          ref = useRef(),
-          element = ref.current;
+          canvasRef = useRef(),
+          divRef = useRef(),
+          canvasElement = canvasRef.current,
+          divElement = divRef.current,
+          canvasDimensions = getCanvasDims(canvasElement);
     
+    function getCanvasDims(el) {
+        if (el === null || el === undefined) {
+            return new THREE.Vector2();
+        } else {
+            return new THREE.Vector2(el.width, el.height);
+        }
+    }
+    
+    /*
     let computedStyle;
 
     function useMovingCanvas(i) {
@@ -39,16 +52,17 @@ const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
                         };
         return infoObj;
     }
+    */
 
     function getMinimumScale(info) {
         return info.scaleX >= info.scaleY ? info.scaleY : info.scaleX;
     }
 
-    useMovingCanvas(interval);
+    //useMovingCanvas(interval);
 
     return (  
-        <div ref={ref} id="rocket-canvas" hidden={!enabled}>
-            <Canvas camera={{position: [0, 0, 3 + (0.4*getMinimumScale(rocketInfo))]}}>
+        <div ref={divRef} id="rocket-canvas" hidden={!enabled}>
+            <Canvas ref={canvasRef} camera={{position: [0, 0, 3 + (0.4*getMinimumScale(rocketInfo))]}}>
                 <primitive object={new THREE.AxesHelper(1)} />
                 <LaunchableRocket scalar={scalar} 
                                   count={count} 
@@ -56,6 +70,8 @@ const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
                                   reset={!enabled}
                                   interval={interval}
                                   tPlus={tPlus}
+                                  canvasDim={canvasDimensions}
+                                  div={divElement}
                 />
                 <ambientLight 
                     intensity={0.2} 

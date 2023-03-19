@@ -94,7 +94,7 @@ $button-border-colors: ("light": $body-emphasis-color,
         min-width: 50%;
         min-height: 50%;
     }
-    .education-logo, #rocket-effect-component {
+    #wu-logo, #lc-logo {
         @include opacity-fade(1.2s);
     }
     .education-label {

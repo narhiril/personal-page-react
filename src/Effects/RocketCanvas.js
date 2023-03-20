@@ -2,8 +2,7 @@ import "./scss/EffectsCanvas.scss";
 import { Canvas } from "@react-three/fiber";
 import LaunchableRocket from "./LaunchableRocket";
 import * as THREE from 'three';
-import { useRef } from 'react';
-import { useFBO } from "@react-three/drei";
+import { Suspense, useRef } from 'react';
 
 const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
     const scalar = 1,
@@ -63,8 +62,9 @@ const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
     return (  
         <div ref={divRef} id="rocket-canvas" hidden={!enabled}>
             <Canvas ref={canvasRef} camera={{position: [0, 0, 3 + (0.4*getMinimumScale(rocketInfo))]}}>
-                <primitive object={new THREE.AxesHelper(1)} />
-                <LaunchableRocket scalar={scalar} 
+                <Suspense fallback={null}>
+                    <primitive object={new THREE.AxesHelper(1)} />
+                    <LaunchableRocket scalar={scalar} 
                                   count={count} 
                                   zCoord={zCoord}
                                   reset={!enabled}
@@ -72,10 +72,11 @@ const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
                                   tPlus={tPlus}
                                   canvasDim={canvasDimensions}
                                   div={divElement}
-                />
-                <ambientLight 
-                    intensity={0.2} 
-                />
+                    />
+                    <ambientLight 
+                        intensity={0.2} 
+                    />
+                </Suspense>
             </Canvas>
         </div>
     );

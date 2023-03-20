@@ -1,9 +1,6 @@
 import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
-import { useRef, useMemo, useEffect, useCallback } from "react";
-import { useFBO } from "@react-three/drei";
-import smokeFragmentShader from "./shaders/SmokeFragmentShader";
-import smokeVertexShader from "./shaders/SmokeVertexShader";
+import { useRef, useMemo } from "react";
 
 const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvasDim, div}) => {
 
@@ -13,7 +10,6 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
           rocket = useRef(),
           flame = useRef(),
           group = useRef(),
-          smokeDrawSurface = useRef(),
           { scene, camera, gl, clock } = useThree(),
           frames = 12,
           flameOffset = -0.575 * scalar,
@@ -22,42 +18,6 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
     const isHidden = useMemo(() => {
         div.getAttribute("hidden")
     }, [div]);
-    
-    //SHADERS, UNIFORMS, AND WEBGL VARIABLES
-    const uniforms = useMemo(() => ({
-        u_mouse: { value: { x: 0, y: 0 } },
-        u_resolution: { value: canvasDim },
-        u_backbuffer: { value: new THREE.Texture() },
-        u_time: { value: 0.0 }
-    }), []);
-
-    let readBuffer = useFBO(canvasDim.x, 
-                               canvasDim.y,
-                               {
-                                   minFilter: THREE.NearestFilter,
-                                   magFilter: THREE.NearestFilter,
-                                   type: THREE.FloatType
-                               }),
-        writeBuffer = readBuffer.clone();
-
-    const fragmentShader = smokeFragmentShader, 
-          vertexShader = smokeVertexShader;
-
-    //testing
-
-    const mousePosition = useRef({ x: 0, y: 0 });
-
-    const updateMousePosition = useCallback((e) => {
-            mousePosition.current = { x: e.pageX, y: e.pageY };
-          }, []);
-
-    useEffect(() => {
-        window.addEventListener("mousemove", updateMousePosition, false);
-
-        return () => {
-        window.removeEventListener("mousemove", updateMousePosition, false);
-        };
-    }, [updateMousePosition]);
 
     //TEXTURE SETUP
     const textures = {
@@ -81,7 +41,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
         const time = useRef(-delay-frameTime),
               currentFrame = useRef(0),
               hasFired = useRef(false);
-        useFrame((_, dt) => {
+        useFrame((delta) => {
             if (reset) {
                 currentFrame.current = 0;
                 time.current = -delay-frameTime;
@@ -90,33 +50,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 tx.offset.x = 0;
                 return;
             }
-            //Draw to offscreen frame buffer
-            gl.setRenderTarget(writeBuffer);
-            gl.clear();
-            gl.render(scene, camera);
-            //back to drawing to canvas
-            gl.setRenderTarget(null);
-            //writeBuffer => readBuffer
-            swapBuffers();
-
-            smokeDrawSurface.current
-                            .material
-                            .uniforms
-                            .u_time
-                            .value = clock.getElapsedTime();
-            smokeDrawSurface.current
-                            .material
-                            .uniforms
-                            .u_backbuffer
-                            .value = readBuffer.texture;
-            smokeDrawSurface.current
-                            .material
-                            .uniforms
-                            .u_mouse
-                            .value=new THREE.Vector2(mousePosition.current.x, mousePosition.current.y);
-
-            //Rocket flame animation
-            time.current += dt * 1000;
+            time.current += delta * 1000;
             if (!hasFired.current && time.current > 0 && flame.current.material.opacity === 0) {
                 hasFired.current = true;
                 flame.current.material.opacity = 1;
@@ -159,12 +93,6 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
     }
     */
 
-    function swapBuffers() {
-        const helper = readBuffer;
-        readBuffer = writeBuffer;
-        writeBuffer = helper;
-    }
-
     async function atEndOfCountdown(int, c) {
         if (c <= 0) {
             return false;
@@ -197,8 +125,8 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
         }
     }
 
-    return ( 
-        <group ref={group} position={sceneStartCoords}>
+    return (
+        <group ref={group} position={sceneStartCoords}>              
             <mesh visible 
                   scale={scalar} 
                   ref={rocket}
@@ -223,20 +151,6 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                     map={flameAnimationTx} 
                 />
             </sprite>
-            <mesh visible
-                  scale={scalar} 
-                  ref={smokeDrawSurface} 
-                  position={[0, 0, 0]}>
-                <planeGeometry 
-                    args={[3, 3]}
-                />
-                <shaderMaterial
-                  map={logoBaseTx}
-                  vertexShader={vertexShader} 
-                  fragmentShader={fragmentShader} 
-                  uniforms={uniforms} 
-                />
-            </mesh>
         </group>
     );
 }

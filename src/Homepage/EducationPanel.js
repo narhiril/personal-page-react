@@ -1,7 +1,7 @@
 import "./scss/EducationPanel.scss";
 import launchcode from "../Assets/launchcodeCompleteLogo.png";
 import webster from "../Assets/websterlogo.svg";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import useWindowDimensions from "../Shared/Hooks/useWindowDimensions";
 import RocketCanvas from "../Effects/RocketCanvas";
 

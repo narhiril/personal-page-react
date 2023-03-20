@@ -13,7 +13,7 @@
     grid-template-columns: 4vw 10vw 10vw;
     grid-template-rows: 5vh;
     position: fixed;
-    left: 2%;
+    left: clamp(50px, 2%, 200px);
     bottom: 0.5vh;
     margin: 0px 10px;
 

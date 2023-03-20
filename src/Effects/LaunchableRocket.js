@@ -1,6 +1,6 @@
 import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
-import { useRef, useMemo } from "react";
+import { useRef, useEffect } from "react";
 
 const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvasDim, div}) => {
 
@@ -10,14 +10,11 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
           rocket = useRef(),
           flame = useRef(),
           group = useRef(),
+          motion = useRef(0),
+          sceneStartCoords = new THREE.Vector3(0, 0, zCoord),
           { scene, camera, gl, clock } = useThree(),
           frames = 12,
-          flameOffset = -0.575 * scalar,
-          sceneStartCoords = new THREE.Vector3(0, 0, zCoord);
-
-    const isHidden = useMemo(() => {
-        div.getAttribute("hidden")
-    }, [div]);
+          flameOffset = -0.585 * scalar;    
 
     //TEXTURE SETUP
     const textures = {
@@ -41,21 +38,31 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
         const time = useRef(-delay-frameTime),
               currentFrame = useRef(0),
               hasFired = useRef(false);
-        useFrame((delta) => {
+        useFrame((_, delta) => {
             if (reset) {
                 currentFrame.current = 0;
                 time.current = -delay-frameTime;
                 hasFired.current = false;
                 flame.current.material.opacity = 0;
                 tx.offset.x = 0;
+                motion.current = 0;
+                group.current.position.y = sceneStartCoords.y;
+                group.current.rotation.z = 0;
                 return;
+            }
+            if (motion.current > 0 && hasFired.current) {
+                group.current.position.y += (motion.current * 0.0025);
+                motion.current += 0.025;
             }
             time.current += delta * 1000;
             if (!hasFired.current && time.current > 0 && flame.current.material.opacity === 0) {
                 hasFired.current = true;
                 flame.current.material.opacity = 1;
+                console.log("Liftoff");
+                motion.current += 1;
             }
             if (time.current >= frameTime) {
+                group.current.rotation.z += 0.0045 * Math.sin(clock.getElapsedTime());
                 if (currentFrame.current + 1 > frameCount - 1) {
                         //random cycle the last 5 frames
                     currentFrame.current = Math.floor(Math.random() * 5) + 7;
@@ -66,50 +73,6 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 tx.offset.x = currentFrame.current / frameCount;
             }
         });
-    }
-
-    /*
-    function toWorldCoords(coords) {
-        const element = gl.domElement,
-              halfWidth = element.width / 2,
-              halfHeight = element.height / 2,
-              vector = new THREE.Vector3(),
-              position = new THREE.Vector3();
-
-        vector.set(-(coords.x / halfWidth) * 2 + 1,
-                   (coords.y / halfHeight) * 2 - 1,
-                   0.5);
-
-        vector.unproject(camera)
-              .sub(camera.position)
-              .normalize();
-        
-        position.copy(camera.position)
-                .add(vector.multiplyScalar(camera.position.z / vector.z));
-
-        console.log(`world coords: ${position.x}, ${position.y}, ${position.z}`);
-        
-        return position;
-    }
-    */
-
-    async function atEndOfCountdown(int, c) {
-        if (c <= 0) {
-            return false;
-        }
-        setTimeout(() => {
-
-        }, int*c);
-        return true;
-    }
-
-    async function atEndOfAnimation(postCount) {
-        await atEndOfCountdown(interval, count).then(() => {
-            setTimeout(() => {
-                flameAnimationTx.offset.x = 0;
-            }, tPlus);
-        });
-        return true;
     }
 
     function themeColor(th) {
@@ -126,7 +89,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
     }
 
     return (
-        <group ref={group} position={sceneStartCoords}>              
+        <group ref={group}>              
             <mesh visible 
                   scale={scalar} 
                   ref={rocket}
@@ -141,15 +104,14 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 transparent
             />
             </mesh>
-            <sprite args={[1, 3]}
-                    scale={scalar} 
+            <sprite scale={scalar} 
                     ref={flame}
                     position={[0, flameOffset, 0]}>
-                <spriteMaterial 
-                    transparent 
-                    opacity={0}
-                    map={flameAnimationTx} 
-                />
+            <spriteMaterial 
+                  transparent 
+                  opacity={0}
+                  map={flameAnimationTx} 
+            />
             </sprite>
         </group>
     );

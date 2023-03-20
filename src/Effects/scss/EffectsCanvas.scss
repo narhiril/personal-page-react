@@ -10,5 +10,5 @@
 #rocket-canvas {
     position: absolute;
     z-index: 1;
-    @include opacity-fade(1.2s);
+    @include opacity-fade(0.5s);
 }

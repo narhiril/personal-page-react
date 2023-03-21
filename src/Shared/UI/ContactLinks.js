@@ -1,5 +1,5 @@
-import linkedinlogo from "../../Assets/linkedin.png";
-import githublogo from "../../Assets/github.png";
+//import linkedinlogo from "../../Assets/linkedin.png";
+//import githublogo from "../../Assets/github.png";
 import "./scss/ContactLinks.scss";
 import { BsFillEnvelopeAtFill, BsLinkedin, BsGithub } from "react-icons/bs";
 //<img id="linkedin" className="align-middle" src={linkedinlogo} alt="LinkedIn" />

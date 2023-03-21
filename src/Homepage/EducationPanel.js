@@ -14,8 +14,8 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
           windowDim = useWindowDimensions(),
           [launchText, setLaunchText] = useState(buttonText),
           [canLaunch, setCanLaunch] = useState(true),
-          [countdown, setCountdown] = useState(countFrom),
-          tPlus = animationDuration - (interval*countFrom);
+          [countdown, setCountdown] = useState(countFrom);
+          //tPlus = animationDuration - (interval*countFrom);
 
     useEffect(() => {
         adjustCanvas(scaleFactor);
@@ -171,7 +171,6 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                                   opacity={0}
                                   count={countFrom}
                                   interval={interval}
-                                  tPlus={tPlus}
                                   id="rocket-effect-component"
                                   />
                     </div>

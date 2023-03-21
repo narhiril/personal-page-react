@@ -20,50 +20,17 @@ const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
             return new THREE.Vector2(el.width, el.height);
         }
     }
-    
-    /*
-    let computedStyle;
-
-    function useMovingCanvas(i) {
-        const time = useRef(0),
-              offset = useRef(new THREE.Vector3(0, 0, 0));
-        useEffect(() => {
-            time.current += 1000;
-            if (time.current >= i) {
-                time.current = 0;
-                if (element !== undefined && element !== null) {
-                    computedStyle = canvasPosition(element, rocketInfo);
-                }
-            }
-        });
-    };
-
-    function canvasPosition(el, info) {
-        const bounds = el.getBoundingClientRect(),
-              left = info.x - (bounds.left / 2),
-              top = info.y - (bounds.top / 2),
-              infoObj = { 
-                          bounds: bounds,
-                          left: left, 
-                          top: top,
-                          scaleX: info.scaleX,
-                          scaleY: info.scaleY 
-                        };
-        return infoObj;
-    }
-    */
 
     function getMinimumScale(info) {
         return info.scaleX >= info.scaleY ? info.scaleY : info.scaleX;
     }
 
-    //useMovingCanvas(interval);
+    //<primitive object={new THREE.AxesHelper(1)} />
 
     return (  
         <div ref={divRef} id="rocket-canvas" hidden={!enabled}>
             <Canvas ref={canvasRef} camera={{position: [0, 0, 3 + (0.4*getMinimumScale(rocketInfo))]}}>
                 <Suspense fallback={null}>
-                    <primitive object={new THREE.AxesHelper(1)} />
                     <LaunchableRocket scalar={scalar} 
                                   count={count} 
                                   zCoord={zCoord}

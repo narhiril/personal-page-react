@@ -71,6 +71,10 @@
     filter: contrast(0%) brightness(200%);
 }
 
+[data-bs-theme="light"] #footer-logo.three {
+    filter: contrast(0%) brightness(200%) invert(1);
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .powered-by {
         transition: bottom 2s ease-out 0s, 
@@ -91,11 +95,24 @@
     
     #footer-logo.three {
         transform-origin: 45% 45%;
-        animation: 35s ease-in-out 0s infinite three-skew;
+        animation: 35s ease-in-out 0s infinite three-rotate;
         animation-direction: alternate-reverse;
     }
 }
 
+@keyframes three-rotate {
+    0% {
+        transform: rotate3d(0, 0.75, 0.25, 0);
+    }
+    50% {
+        transform: rotate3d(0, 0.75, 0.25, 6.283rad);
+    }
+    100% {
+        transform: rotate3d(0, 0.75, 0.25, 0);
+    }
+}
+
+/*
 @keyframes three-skew {
     0% {
         transform: rotate(0deg) skewX(0rad) skewY(0rad);
@@ -113,6 +130,7 @@
         transform: rotate(-1440deg) skewX(0rad) skewY(0rad);
     }
 }
+*/
 
 @keyframes react-spin {
     0% {

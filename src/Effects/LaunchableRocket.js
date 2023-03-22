@@ -2,7 +2,6 @@ import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import { useRef, useMemo } from "react";
 import BasePlate from "./BasePlate";
-import { useFBO } from "@react-three/drei";
 import basicVertexShader from "./shaders/BasicVertexShader";
 import bloomFragmentShader from "./shaders/BloomFragmentShader";
 import blurFragmentShader from "./shaders/BlurFragmentShader";
@@ -117,7 +116,13 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 time.current = 0;
                 tx.offset.x = currentFrame.current / frameCount;
             }
+            scene.overrideMaterial = bloomMaterial;
+            gl.setRenderTarget(bloomBuffer);
+            gl.render(scene, offScreen);
 
+            scene.overrideMaterial = null;
+            gl.setRenderTarget(null);
+            gl.render(scene, camera);
 
 
         });

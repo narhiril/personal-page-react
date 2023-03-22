@@ -2,6 +2,10 @@ import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import { useRef, useMemo } from "react";
 import BasePlate from "./BasePlate";
+import { useFBO } from "@react-three/drei";
+import basicVertexShader from "./shaders/BasicVertexShader";
+import bloomFragmentShader from "./shaders/BloomFragmentShader";
+import blurFragmentShader from "./shaders/BlurFragmentShader";
 
 const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvasDim, div}) => {
 
@@ -14,12 +18,44 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
           motion = useRef(0),
           sceneStartCoords = new THREE.Vector3(0, 0, zCoord),
           { scene, camera, gl, clock } = useThree(),
-          frames = 12;
+          frames = 12,
+          offScreen = new THREE.OrthographicCamera();
           
     const offsets = useMemo(() => ({
         base: (-0.585 * scalar) - 0.25,
         flame: -0.585 * scalar
     }), [scalar]);
+
+    //SHADER SETUP
+    const [bloomUniforms, blurUniforms, bloomBuffer, blurBuffer] = useMemo(() => {
+        const bloomBuffer = new THREE.WebGLRenderTarget(canvasDim.x, 
+                                                        canvasDim.y,
+                                                        {
+                                                            magFilter: THREE.NearestFilter, 
+                                                            minFilter: THREE.NearestFilter
+                                                        }),
+        blurBuffer = bloomBuffer.clone(),
+        bloomUniforms = { u_time: { value: 0.0 },
+                          u_texture: { value: new THREE.Texture() },
+                          u_threshold: { value: new THREE.Color(0.7, 0.7, 0.7) }
+                        },
+        blurUniforms = { u_time: { value: 0.0 },
+                         u_texture: { value: new THREE.Texture() },
+                         u_horizontal: { value: true }
+                        }
+    }, []);
+
+    const bloomMaterial = new THREE.ShaderMaterial({
+        uniforms: bloomUniforms,
+        vertexShader: basicVertexShader,
+        fragmentShader: bloomFragmentShader
+    });
+
+    const blurMaterial = new THREE.ShaderMaterial({
+        uniforms: blurUniforms,
+        vertexShader: basicVertexShader,
+        fragmentShader: blurFragmentShader
+    });
 
     //TEXTURE SETUP
     const textures = {
@@ -41,6 +77,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
         const time = useRef(-delay-frameTime),
               currentFrame = useRef(0),
               hasFired = useRef(false);
+
         useFrame((_, delta) => {
             if (reset) {
                 currentFrame.current = 0;
@@ -80,6 +117,9 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 time.current = 0;
                 tx.offset.x = currentFrame.current / frameCount;
             }
+
+
+
         });
     }
 
@@ -111,15 +151,16 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                     transparent
                 />
                 </mesh>
-                <sprite scale={scalar} 
+                <mesh scale={scalar} 
                         ref={flame}
                         position={[0, offsets.flame, 0]}>
-                <spriteMaterial 
+                <planeGeometry args={[1, 3]} />
+                <meshStandardMaterial 
                       transparent 
                       opacity={0}
-                      map={flameAnimationTx} 
+                      map={flameAnimationTx}
                 />
-                </sprite>
+                </mesh>
             </group>
             <BasePlate scalar={scalar} 
                        color={themeColor(theme)} 

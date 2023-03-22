@@ -1,6 +1,6 @@
-//This is just the default vertex shader for now
+//this does nothing special except for setting up v_Uv
 
-const smokeVertexShader = `
+const basicVertexShader = `
 //VERTEX SHADER
 
 varying vec3 v_Uv;
@@ -17,4 +17,4 @@ void main() {
 }
 `;
 
-export default smokeVertexShader;
+export default basicVertexShader;

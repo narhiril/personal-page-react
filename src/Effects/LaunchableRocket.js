@@ -34,14 +34,16 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                                                             minFilter: THREE.NearestFilter
                                                         }),
         blurBuffer = bloomBuffer.clone(),
-        bloomUniforms = { u_time: { value: 0.0 },
+        bloomUniforms = {
                           u_texture: { value: new THREE.Texture() },
                           u_threshold: { value: new THREE.Color(0.7, 0.7, 0.7) }
                         },
-        blurUniforms = { u_time: { value: 0.0 },
+        blurUniforms = {
                          u_texture: { value: new THREE.Texture() },
                          u_horizontal: { value: true }
-                        }
+                        };
+
+        return [bloomUniforms, blurUniforms, bloomBuffer, blurBuffer];
     }, []);
 
     const bloomMaterial = new THREE.ShaderMaterial({
@@ -120,6 +122,21 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
             gl.setRenderTarget(bloomBuffer);
             gl.render(scene, offScreen);
 
+            blurUniforms.u_horizontal = true;
+            blurUniforms.u_texture = bloomBuffer.texture;
+
+            scene.overrideMaterial = blurMaterial;
+            gl.setRenderTarget(blurBuffer);
+            gl.render(scene, offScreen);
+
+            blurUniforms.u_horizontal = false;
+            blurUniforms.u_texture = blurBuffer.texture;
+
+            scene.overrideMaterial = blurMaterial;
+            gl.setRenderTarget(blurBuffer);
+            gl.clear();
+            gl.render(scene, camera);
+
             scene.overrideMaterial = null;
             gl.setRenderTarget(null);
             gl.render(scene, camera);
@@ -159,7 +176,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 <mesh scale={scalar} 
                         ref={flame}
                         position={[0, offsets.flame, 0]}>
-                <planeGeometry args={[1, 3]} />
+                <planeGeometry args={[1, 1]} />
                 <meshStandardMaterial 
                       transparent 
                       opacity={0}
@@ -167,6 +184,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 />
                 </mesh>
             </group>
+            <pointLight position={[0, 0, 3]} intensity={1}/>
             <BasePlate scalar={scalar} 
                        color={themeColor(theme)} 
                        offset={offsets.base}

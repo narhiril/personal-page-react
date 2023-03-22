@@ -3,7 +3,7 @@
 const basicVertexShader = `
 //VERTEX SHADER
 
-varying vec3 v_Uv;
+varying vec2 v_Uv;
 
 void main() {
 

@@ -2,6 +2,7 @@ import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import { useRef, useMemo } from "react";
 import BasePlate from "./BasePlate";
+import FlashEffect from "./FlashEffect";
 
 const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvasDim, div}) => {
 
@@ -11,9 +12,11 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
           rocket = useRef(),
           flame = useRef(),
           group = useRef(),
+          effect = useRef(),
+          resetFlash = useRef(true),
           motion = useRef(0),
           sceneStartCoords = new THREE.Vector3(0, 0, zCoord),
-          { scene, camera, gl, clock } = useThree(),
+          { clock } = useThree(),
           frames = 12;
           
     const offsets = useMemo(() => ({
@@ -52,6 +55,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 group.current.position.z = sceneStartCoords.z;
                 group.current.position.y = sceneStartCoords.y;
                 group.current.rotation.z = 0;
+                resetFlash.current = true;
                 return;
             }
             //handles upwards movement
@@ -66,6 +70,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 flame.current.material.opacity = 1;
                 console.log("Liftoff");
                 motion.current += 1;
+                resetFlash.current = false;
             }
             //sets flame animation next frame
             if (time.current >= frameTime) {
@@ -120,6 +125,13 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                       map={flameAnimationTx} 
                 />
                 </sprite>
+                <FlashEffect ref={effect}
+                             zCoord={zCoord} 
+                             scalar={scalar}
+                             canvasDim={canvasDim} 
+                             reset={resetFlash.current}
+                             position={[0, offsets.flame, 0]}
+                />
             </group>
             <BasePlate scalar={scalar} 
                        color={themeColor(theme)} 

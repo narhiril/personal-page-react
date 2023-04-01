@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import useWindowDimensions from "../Shared/Hooks/useWindowDimensions";
 import RocketCanvas from "../Effects/RocketCanvas";
 
-const EducationPanel = ({render, onFooterChange, animationDuration}) => {
+const EducationPanel = ({render, onFooterChange}) => {
 
     const buttonText = "Liftoff",
           countFrom = 9,
-          interval = 1200,
+          interval = 500,
           scaleFactor = 350,
+          animationDuration = getAnimationMinimumDuration(interval),
           windowDim = useWindowDimensions(),
           [launchText, setLaunchText] = useState(buttonText),
           [canLaunch, setCanLaunch] = useState(true),
@@ -20,6 +21,10 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
     useEffect(() => {
         adjustCanvas(scaleFactor);
     });
+
+    function getAnimationMinimumDuration(i) {
+        return i * 17 < 13000 ? 13000 : i * 17;
+    }
 
     function adjustCanvas(extraScaleFactor = 0) {
         const logoElement = document.getElementById("lc-logo"),

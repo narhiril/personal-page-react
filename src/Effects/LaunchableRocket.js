@@ -1,6 +1,6 @@
 import { useLoader, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState } from "react";
 import BasePlate from "./BasePlate";
 import FlashEffect from "./FlashEffect";
 
@@ -13,15 +13,16 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
           flame = useRef(),
           group = useRef(),
           effect = useRef(),
-          resetFlash = useRef(true),
           motion = useRef(0),
           sceneStartCoords = new THREE.Vector3(0, 0, zCoord),
           { clock } = useThree(),
+          [resetFlash, setResetFlash] = useState(true),
           frames = 12;
           
     const offsets = useMemo(() => ({
         base: (-0.585 * scalar) - 0.25,
-        flame: -0.585 * scalar
+        flame: -0.585 * scalar,
+        flash: (-0.585 * scalar) / 3.5
     }), [scalar]);
 
     //TEXTURE SETUP
@@ -55,7 +56,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 group.current.position.z = sceneStartCoords.z;
                 group.current.position.y = sceneStartCoords.y;
                 group.current.rotation.z = 0;
-                resetFlash.current = true;
+                setResetFlash(true);
                 return;
             }
             //handles upwards movement
@@ -70,7 +71,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 flame.current.material.opacity = 1;
                 console.log("Liftoff");
                 motion.current += 1;
-                resetFlash.current = false;
+                setResetFlash(false);
             }
             //sets flame animation next frame
             if (time.current >= frameTime) {
@@ -129,8 +130,9 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                              zCoord={zCoord} 
                              scalar={scalar}
                              canvasDim={canvasDim} 
-                             reset={resetFlash.current}
-                             position={[0, offsets.flame, 0]}
+                             reset={resetFlash}
+                             flashOffset={offsets.flash}
+                             position={[0, 0, 0]}
                 />
             </group>
             <BasePlate scalar={scalar} 

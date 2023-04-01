@@ -7,7 +7,11 @@ const FlashEffect = forwardRef(function FlashEffect(props, forwardRef) {
 
     return (
         <>
-            <FlashSource ref={forwardRef} reset={props.reset} scalar={props.scalar} zCoord={props.zCoord}/>
+            <FlashSource ref={forwardRef} 
+                         reset={props.reset} 
+                         scalar={props.scalar} 
+                         zCoord={props.zCoord}
+                         flashOffset={props.flashOffset}/>
             {forwardRef.current && (
                 <EffectComposer multisampling={0}>
                     <GodRays

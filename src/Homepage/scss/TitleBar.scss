@@ -18,11 +18,18 @@
         font-size: 3.2vw;
         grid-row: 2;
         justify-self: start;
+        @include opacity-fade(0.25s);
+    }
+    h1.no-secondary {
+        justify-self: start;
+        margin-left: 15%;
+        font-size: 3.2vw;
     }
     h2 {
         font-size: 2vw;
         grid-row: 3;
         grid-column: 2;
+        @include opacity-fade(0.25s);
     }
     img {
         max-height: 6vmax;

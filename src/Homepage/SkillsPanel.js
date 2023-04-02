@@ -1,7 +1,7 @@
 import "./scss/SkillsPanel.scss";
 
-const SkillsPanel = () => {
-    return ( 
+const SkillsPanel = ({render}) => {
+    if (render) return ( 
         <div className="skills-panel">
 
         </div>

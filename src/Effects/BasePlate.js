@@ -7,8 +7,8 @@ const BasePlate = ({scalar, color, offset, zCoord}) => {
           texture = useLoader(THREE.TextureLoader, texturePath);
 
     return (  
-        <mesh scale={scalar}
-              position={[0, offset, zCoord]} 
+        <mesh scale={scalar > 0.275 ? scalar - 0.25 : scalar}
+              position={[0, offset, zCoord+0.95]} //z offset is for flash effect occlusion
               visible>
         <planeGeometry args={[1, 1]}/>
         <meshStandardMaterial 

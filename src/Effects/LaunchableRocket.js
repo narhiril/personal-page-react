@@ -4,7 +4,7 @@ import { useRef, useMemo, useState } from "react";
 import BasePlate from "./BasePlate";
 import FlashEffect from "./FlashEffect";
 
-const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvasDim, div}) => {
+const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) => {
 
     //COMPONENT VARIABLES
     const root = document.getElementsByTagName("html")[0],
@@ -14,13 +14,15 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
           group = useRef(),
           effect = useRef(),
           motion = useRef(0),
+          preLaunchWobble = useRef(false),
           sceneStartCoords = new THREE.Vector3(0, 0, zCoord),
           { clock } = useThree(),
           [resetFlash, setResetFlash] = useState(true),
+          launchDelay = interval * (count + 1),
           frames = 12;
           
     const offsets = useMemo(() => ({
-        base: (-0.585 * scalar) - 0.25,
+        base: (-0.585 * scalar) - 0.15,
         flame: -0.585 * scalar,
         flash: (-0.585 * scalar) / 3.5
     }), [scalar]);
@@ -38,12 +40,14 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
     flameAnimationTx.magFilter = THREE.NearestFilter;
     flameAnimationTx.repeat.set(1 / frames, 1);
 
-    useFlameAnimation(flameAnimationTx, 150, frames, interval*(count+1));
+    //SET ANIMATION PARAMETERS
+    useFlameAnimation(flameAnimationTx, 150, frames, launchDelay);
 
     //RENDER LOOP
     function useFlameAnimation(tx, frameTime, frameCount, delay) {
         const time = useRef(-delay-frameTime),
               currentFrame = useRef(0),
+              hasStartedPreLaunch = useRef(false),
               hasFired = useRef(false);
         useFrame((_, delta) => {
             if (reset) {
@@ -56,15 +60,38 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 group.current.position.z = sceneStartCoords.z;
                 group.current.position.y = sceneStartCoords.y;
                 group.current.rotation.z = 0;
+                rocket.current.rotation.z = 0;
+                hasStartedPreLaunch.current = false;
+                preLaunchWobble.current = false;
                 setResetFlash(true);
+                //skip all subsequent checks
                 return;
             }
+
+            //increment animation frame timer, resets to zero on every flame animation frame
+            time.current += delta * 1000;
+
+            //handles trigger for pre-launch wobble animation
+            if (!hasStartedPreLaunch.current) {
+                startPreLaunchAnimationTimer(count, interval, 1.75);
+                hasStartedPreLaunch.current = true;
+            }
+
+            //handles wobble immediately before flame animation start
+            if (preLaunchWobble.current) {
+                rocket.current.rotation.z = 0.0825 * Math.cos(time.current / 100);
+                //skip all subsequent checks
+                return;
+            } else {
+                rocket.current.rotation.z = 0;
+            }
+
             //handles upwards movement
             if (motion.current > 0 && hasFired.current) {
                 group.current.position.y += (motion.current * 0.0025);
                 motion.current += 0.025;
             }
-            time.current += delta * 1000;
+
             //handles trigger for flame animation start
             if (!hasFired.current && time.current > 0 && flame.current.material.opacity === 0) {
                 hasFired.current = true;
@@ -73,10 +100,11 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
                 motion.current += 1;
                 setResetFlash(false);
             }
-            //sets flame animation next frame
+
+            //advance flame animation to next frame
             if (time.current >= frameTime) {
-                //slight wobble on ascent
-                group.current.rotation.z += 0.0045 * Math.sin(clock.getElapsedTime());
+                //slight rotation on ascent
+                group.current.rotation.z = 0.0095 * Math.sin(0.2 * clock.getElapsedTime());
                 if (currentFrame.current + 1 > frameCount - 1) {
                     //random cycle the last 5 frames
                     currentFrame.current = Math.floor(Math.random() * 5) + 7;
@@ -89,6 +117,7 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
         });
     }
 
+    //HELPERS
     function themeColor(th) {
         switch (th) {
             case "dark":
@@ -99,6 +128,27 @@ const LaunchableRocket = ({scalar, count, interval, tPlus, reset, zCoord, canvas
             default:
                 //launchcode logo blue
                 return new THREE.Color(0x104a6d);;
+        }
+    }
+
+    function startPreLaunchAnimationTimer(countFrom, dt, startAt) {
+        if (countFrom < 3 || dt <= 0 || startAt > countFrom) {
+            preLaunchWobble.current = false;
+            console.error("LaunchableRocket pre-launch animation aborted - invalid parameters");
+            return;
+        } else {
+            const startAnimation = ((countFrom+1) * dt) - (startAt * dt),
+                  animationDuration = (dt * startAt) - (dt / 4);
+            setTimeout(() => {
+                //flag for render loop
+                preLaunchWobble.current = true;
+                //console.log('LaunchaleRocket pre-launch animation start');
+                //cleanup at end of animation
+                setTimeout(() => {
+                    preLaunchWobble.current = false;
+                    //console.log('LaunchaleRocket pre-launch animation end');
+                }, animationDuration);
+            }, startAnimation);
         }
     }
 

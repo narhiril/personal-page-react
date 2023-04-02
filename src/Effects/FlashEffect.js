@@ -17,7 +17,7 @@ const FlashEffect = forwardRef(function FlashEffect(props, forwardRef) {
                     <GodRays
                         sun={forwardRef.current}
                         blendFunction={BlendFunction.ADD}
-                        samples={20}
+                        samples={24}
                         density={0.67}
                         decay={0.997}
                         weight={0.3}

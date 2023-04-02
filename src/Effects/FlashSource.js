@@ -1,7 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { animated, useSpring } from '@react-spring/three';
-import * as THREE from 'three';
 
 const FlashSource = forwardRef(function FlashSource(props, forwardRef) {
     const interval = props.scalar * 0.225,
@@ -20,10 +18,10 @@ const FlashSource = forwardRef(function FlashSource(props, forwardRef) {
     useFrame((_, delta) => {
         if (!props.reset) {
             //start flash
-            decayTime.current += delta;
+            decayTime.current += 2 * delta;
             if (size.current === 0) {
-                size.current = 0.055;
-            } else if (size.current > 0.05) {
+                size.current = 0.178;
+            } else if (size.current > 0.175) {
                 //initial ramp up
                 if (!isDecaying.current) {
                     size.current *= Math.pow(1.275, decayTime.current);
@@ -33,7 +31,7 @@ const FlashSource = forwardRef(function FlashSource(props, forwardRef) {
                 }
             } else {
                 //hold until reset
-                size.current = 0.025;
+                size.current = 0.173;
             }
             
             //start decay
@@ -42,13 +40,13 @@ const FlashSource = forwardRef(function FlashSource(props, forwardRef) {
                 decayTime.current = 1;
                 return;
             }
-
-            console.log(`size: ${size.current}, 
-                         1-interval: ${1-interval}, 
+            /*
+            console.log(`size: ${size.current}, //for debugging and/or tweaking functions
                          decayTime: ${decayTime.current}, 
                          isDecaying: ${isDecaying.current}
                          scale: ${isDecaying.current ? interval * (1 / Math.log(decayTime.current)) 
-                                                     : Math.pow(1.05, decayTime.current)}`);
+                                                     : Math.pow(1.275, decayTime.current)}`);
+            */
         } else {
             //reset
             decayTime.current = 1;
@@ -63,7 +61,7 @@ const FlashSource = forwardRef(function FlashSource(props, forwardRef) {
 
     return (
         <mesh ref={meshRef} position={[0, props.flashOffset, 0]}>
-            <sphereGeometry args={[props.scalar*0.455, 16, 16]}/>
+            <sphereGeometry args={[props.scalar*0.55, 16, 16]}/>
             <meshBasicMaterial color={"#FFBC92"} />
         </mesh>
     );

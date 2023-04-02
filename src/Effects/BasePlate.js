@@ -8,7 +8,7 @@ const BasePlate = ({scalar, color, offset, zCoord}) => {
 
     return (  
         <mesh scale={scalar > 0.275 ? scalar - 0.25 : scalar}
-              position={[0, offset, zCoord+0.95]} //z offset is for flash effect occlusion
+              position={[0, offset, zCoord-0.25]} //extra z offset to prevent occluding flash
               visible>
         <planeGeometry args={[1, 1]}/>
         <meshStandardMaterial 

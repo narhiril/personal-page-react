@@ -13,7 +13,7 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
           flame = useRef(),
           group = useRef(),
           effect = useRef(),
-          motion = useRef(0),
+          displacement = useRef(0),
           preLaunchWobble = useRef(false),
           sceneStartCoords = new THREE.Vector3(0, 0, zCoord),
           { clock } = useThree(),
@@ -22,7 +22,7 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
           frames = 12;
           
     const offsets = useMemo(() => ({
-        base: (-0.585 * scalar) - 0.15,
+        base: (-0.585 * scalar) - (0.275 * scalar),
         flame: -0.585 * scalar,
         flash: (-0.585 * scalar) / 3.5
     }), [scalar]);
@@ -56,7 +56,7 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
                 hasFired.current = false;
                 flame.current.material.opacity = 0;
                 tx.offset.x = 0;
-                motion.current = 0;
+                displacement.current = 0;
                 group.current.position.z = sceneStartCoords.z;
                 group.current.position.y = sceneStartCoords.y;
                 group.current.rotation.z = 0;
@@ -87,9 +87,9 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
             }
 
             //handles upwards movement
-            if (motion.current > 0 && hasFired.current) {
-                group.current.position.y += (motion.current * 0.0025);
-                motion.current += 0.025;
+            if (displacement.current > 0 && hasFired.current) {
+                group.current.position.y += (displacement.current * 0.0025);
+                displacement.current += 0.025;
             }
 
             //handles trigger for flame animation start
@@ -97,7 +97,7 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
                 hasFired.current = true;
                 flame.current.material.opacity = 1;
                 console.log("Liftoff");
-                motion.current += 1;
+                displacement.current += 1;
                 setResetFlash(false);
             }
 
@@ -127,7 +127,7 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
                 return new THREE.Color(0xf5dcbc);
             default:
                 //launchcode logo blue
-                return new THREE.Color(0x104a6d);;
+                return new THREE.Color(0x104a6d);
         }
     }
 

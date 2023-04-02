@@ -7,8 +7,7 @@ import { useState, useCallback } from 'react';
 const ViewWrapper = () => {
     const [showEducation, setShowEducation] = useState(false),
           [showTitle, setShowTitle] = useState(true),
-          [footer, setFooter] = useState("react"),
-          launchAnimationDuration = 20000;
+          [footer, setFooter] = useState("react");
 
     function renderEducation() {
         setShowTitle(false);
@@ -34,8 +33,7 @@ const ViewWrapper = () => {
             <Navbar linkHandlers={toggles}/>
             <TitleBar render={showTitle} />
             <EducationPanel render={showEducation} 
-                            onFooterChange={changeFooter} 
-                            animationDuration={launchAnimationDuration}/>
+                            onFooterChange={changeFooter} />
             <Footer poweredBy={footer}/>
         </div>
     );

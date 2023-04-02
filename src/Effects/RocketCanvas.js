@@ -29,7 +29,9 @@ const RocketCanvas = ({rocketInfo, enabled, count, interval, tPlus}) => {
 
     return (  
         <div ref={divRef} id="rocket-canvas" hidden={!enabled}>
-            <Canvas ref={canvasRef} camera={{position: [0, 0, 3 + (0.4*getMinimumScale(rocketInfo))]}}>
+            <Canvas ref={canvasRef} 
+                    camera={{position: [0, 0, 3 + (0.4*getMinimumScale(rocketInfo))]}}
+            >
                 <Suspense fallback={null}>
                     <LaunchableRocket scalar={scalar} 
                                   count={count} 

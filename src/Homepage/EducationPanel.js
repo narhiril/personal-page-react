@@ -5,21 +5,27 @@ import { useState, useEffect } from "react";
 import useWindowDimensions from "../Shared/Hooks/useWindowDimensions";
 import RocketCanvas from "../Effects/RocketCanvas";
 
-const EducationPanel = ({render, onFooterChange, animationDuration}) => {
+const EducationPanel = ({render, onFooterChange}) => {
 
     const buttonText = "Liftoff",
           countFrom = 9,
-          interval = 1200,
-          scaleFactor = 350,
+          interval = 800, //countdown interval in ms
+          scaleFactor = 550, //used to calculate effect canvas size
+          animationDuration = getAnimationMinimumDuration(interval),
           windowDim = useWindowDimensions(),
           [launchText, setLaunchText] = useState(buttonText),
           [canLaunch, setCanLaunch] = useState(true),
+          //todo? additional countdown effects
           [countdown, setCountdown] = useState(countFrom);
           //tPlus = animationDuration - (interval*countFrom);
 
     useEffect(() => {
         adjustCanvas(scaleFactor);
     });
+
+    function getAnimationMinimumDuration(i) {
+        return i * 18 < 13000 ? 13000 : i * 18;
+    }
 
     function adjustCanvas(extraScaleFactor = 0) {
         const logoElement = document.getElementById("lc-logo"),
@@ -51,7 +57,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
         }
     }
 
-    async function toggleRocketVisible(isVisible = true) {
+    async function setRocketLogoVisibility(isVisible = true) {
         const logoElement = document.getElementById("lc-logo"),
               rocketFxElement = document.getElementById("rocket-canvas"),
               found = logoElement !== null && rocketFxElement !== null;
@@ -64,7 +70,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                 rocketFxElement.style.opacity = 1;
             }
         }
-        console.log(`Crossfade elements found: ${found}`);
+        //console.log(`Crossfade elements found: ${found}`);
         return found;
     }
 
@@ -74,7 +80,7 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
 
         //begin sequence
         setCanLaunch(false);
-        toggleRocketVisible(false);
+        setRocketLogoVisibility(false);
 
         //launch button updates for styling
         button.setAttribute("active", true);
@@ -93,13 +99,13 @@ const EducationPanel = ({render, onFooterChange, animationDuration}) => {
                 console.log(value);
             });
 
-            //reset launch button, countdown, and flag for rocket canvas
+            //reset launch button, countdown, and flag for static logo
             button.removeAttribute("active");
             button.classList.remove("active");
             setLaunchText(buttonText);
             setCountdown(countFrom);
             setCanLaunch(true);
-            toggleRocketVisible(true);
+            setRocketLogoVisibility(true);
         }, animationDuration + 500);
     }
 

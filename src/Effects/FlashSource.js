@@ -60,7 +60,7 @@ const FlashSource = forwardRef(function FlashSource(props, forwardRef) {
     });
 
     return (
-        <mesh ref={meshRef} position={[0, props.flashOffset, 0]}>
+        <mesh ref={meshRef} position={[0, props.flashOffset, 0.005]}>
             <sphereGeometry args={[props.scalar*0.55, 16, 16]}/>
             <meshBasicMaterial color={"#FFBC92"} />
         </mesh>

@@ -80,7 +80,7 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
 
             //handles wobble immediately before flame animation start
             if (preLaunchWobble.current) {
-                rocket.current.rotation.z = 0.0825 * Math.cos(time.current / 100);
+                rocket.current.rotation.z = 0.0525 * Math.cos(time.current / 100);
                 //skip all subsequent checks
                 return;
             } else {

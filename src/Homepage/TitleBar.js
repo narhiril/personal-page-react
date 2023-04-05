@@ -12,7 +12,7 @@ const TitleBar = ({render, activePanel}) => {
         skills: "My Skillset"
     }, subheaders = {
         default: "Full Stack Web Developer",
-        //rotating: []
+        //rotating: [],
     };
 
     const [primaryText, setPrimaryText] = useState(headers.default),
@@ -21,10 +21,12 @@ const TitleBar = ({render, activePanel}) => {
     useEffect(() => {
         if (!primary.current || !secondary.current) return;
         hideTitleText();
-        setTimeout(() => {
+        const fadeTimer = setTimeout(() => {
           onPanelChange(activePanel);
         }, 250);
-    }, [activePanel])
+
+        return () => { clearTimeout(fadeTimer); };  
+    }, [activePanel]);
 
     function onPanelChange(panel) {
         let h1, 

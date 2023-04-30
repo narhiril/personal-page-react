@@ -1,11 +1,12 @@
 import "./scss/SkillsSubsection.scss";
 
-const SkillsSubsection = ({name}) => {
+const SkillsSubsection = ({name, imageSrc}) => {
 
     return (
         <div className="skills-subsection">
-            
-        </div>  
+            <img src={imageSrc}></img>
+            <text>{name}</text>
+        </div>
     );
 }
  

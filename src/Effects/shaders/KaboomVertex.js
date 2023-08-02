@@ -9,8 +9,10 @@ uniform mat4 modelViewMatrix;
 varying float distanceFromCenter;
 
 void main() {
+    vec4 offset = position;
     distanceFromCenter = distance(position.xyz, vec3(0.0));
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    offset.xyz += normal * (sin(time) + 1.0);
+    gl_Position = projectionMatrix * modelViewMatrix * offset;
 }
 
 `;

@@ -4,7 +4,7 @@ const SkillsSubsection = ({name, imageSrc}) => {
 
     return (
         <div className="skills-subsection">
-            <img src={imageSrc}></img>
+            <img src={imageSrc} alt={name}></img>
             <text>{name}</text>
         </div>
     );

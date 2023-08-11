@@ -1,10 +1,7 @@
-@import "../../Shared/UI/scss/shared.scss";
+//@import "../../Shared/UI/scss/shared.scss";
 
 .skills-panel {
     margin: auto;
     display: grid;
     grid-template-columns: 45vw 45vw;
-    img {
-        justify-self: center;
-    }
 }

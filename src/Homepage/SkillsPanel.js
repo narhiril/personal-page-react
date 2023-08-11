@@ -1,17 +1,18 @@
 import SkillsSubsection from "./SkillsSubsection";
-import jsIcon from "";
-import tsIcon from "";
-import cSharpIcon from "";
-import sassIcon from "";
-import htmlIcon from "";
+import jsIcon from "../Assets/JavaScript-logo.png";
+//import tsIcon from "";
+//import cSharpIcon from "";
+//import sassIcon from "";
+//import htmlIcon from "";
 import "./scss/SkillsPanel.scss";
 
 const SkillsPanel = ({render}) => {
     if (render) return ( 
         <div className="skills-panel">
             <SkillsSubsection name={"JavaScript"} 
-                              icon={jsIcon}
+                              imageSrc={jsIcon}
             />
+            {/*
             <SkillsSubsection name={"TypeScript"}
                               icon={tsIcon} 
             />
@@ -24,6 +25,7 @@ const SkillsPanel = ({render}) => {
             <SkillsSubsection name={"HTML/CSS"} 
                               icon={htmlIcon}
             />
+            */}
         </div>
     );
 }

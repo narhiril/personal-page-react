@@ -1,6 +1,17 @@
-//todo
+@import "../../Shared/UI/scss/shared.scss";
 
 .skills-subsection {
-    display: grid;
+    @include skills-panel-grid();
     grid-template-columns: 1fr 3fr;
+    align-items: center;
+    img {
+        justify-self: center;
+        max-width: 80%;
+        max-height: 80%;
+    }
+    text {
+        justify-self: left;
+        margin-left: 2pc;
+        font-size: 3.2vw;
+    }
 }

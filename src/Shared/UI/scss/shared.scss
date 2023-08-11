@@ -76,6 +76,11 @@ $all-themes: ("light", "dark", "deepblue", "redshift");
     background-image: linear-gradient(var(--bs-secondary-bg), var(--bs-body-bg));
 }
 
+@mixin skills-panel-grid($width: unset, $gap: 12px) {
+    @include bio-panel-grid($width, $gap);
+    background-image: radial-gradient(var(--bs-secondary-bg), var(--bs-body-bg));
+}
+
 @mixin transition-color($duration: 2s, $delay: 0s) {
     transition: color $duration linear $delay,
                 border-color $duration linear $delay,

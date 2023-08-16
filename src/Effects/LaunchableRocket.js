@@ -88,8 +88,8 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
 
             //handles upwards movement
             if (displacement.current > 0 && hasFired.current) {
-                group.current.position.y += (displacement.current * 0.0025);
-                displacement.current += 0.025;
+                group.current.position.y += (displacement.current * 0.005);
+                displacement.current += 0.045;
             }
 
             //handles trigger for flame animation start

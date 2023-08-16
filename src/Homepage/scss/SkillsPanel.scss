@@ -1,7 +1,13 @@
-//@import "../../Shared/UI/scss/shared.scss";
+@import "../../Shared/UI/scss/shared.scss";
+
+.skills-container {
+    @include center-flex;
+}
 
 .skills-panel {
     margin: auto;
     display: grid;
     grid-template-columns: 45vw 45vw;
+    grid-template-rows: 15vh 15vh 15vh 15vh;
+    row-gap: 10px;
 }

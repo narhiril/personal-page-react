@@ -4,6 +4,7 @@ import Footer from '../../Shared/UI/Footer';
 import EducationPanel from "../../Homepage/EducationPanel";
 import SkillsPanel from "../../Homepage/SkillsPanel";
 import { useState, useCallback } from 'react';
+import "./scss/ViewWrapper.scss";
 
 const ViewWrapper = () => {
     const [showEducation, setShowEducation] = useState(false),
@@ -18,7 +19,7 @@ const ViewWrapper = () => {
     }
 
     function renderEducation() {
-        setTitleMode(false);
+        setTitleMode(false, "education");
         setShowEducation(true);
         setShowSkills(false);
     }

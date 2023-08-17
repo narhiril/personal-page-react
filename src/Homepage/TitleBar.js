@@ -47,7 +47,11 @@ const TitleBar = ({render, activePanel}) => {
     }
     
     function updateText(h1, h2 = "") {
-        if (!primary.current || !secondary.current) return;
+        if (!primary.current || !secondary.current) {
+          setPrimaryText(headers.default);
+          setSecondaryText(subheaders.default);
+          return;
+        }
         setPrimaryText(h1);
         primary.current.classList.remove("invisible");
         if (h2 !== "") {

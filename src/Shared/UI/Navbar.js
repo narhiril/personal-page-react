@@ -7,7 +7,8 @@ const Navbar = ({linkHandlers}) => {
     return ( 
         <div className="navbar navbar-expand-md container-fluid">
             <NavigationLinks onToggleEducation={() => linkHandlers.education}
-                             onToggleTitle={() => linkHandlers.title}/>
+                             onToggleTitle={() => linkHandlers.title}
+                             onToggleSkills={() => linkHandlers.skills} />
             <ContactLinks />
         </div>
     );

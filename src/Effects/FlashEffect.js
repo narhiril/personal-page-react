@@ -1,6 +1,6 @@
 import { EffectComposer, GodRays } from "@react-three/postprocessing";
 import { BlendFunction, KernelSize } from "postprocessing";
-import { useRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import FlashSource from "./FlashSource";
 
 const FlashEffect = forwardRef(function FlashEffect(props, forwardRef) {

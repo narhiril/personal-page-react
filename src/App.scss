@@ -37,5 +37,5 @@ $theme-colortypes: "primary", "secondary", "info", "success", "warning", "danger
 }
 
 .invisible {
-    opacity: 0;
+    opacity: 0 !important;
 }

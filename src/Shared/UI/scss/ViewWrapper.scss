@@ -1,0 +1,13 @@
+//Hide unsightly scroll bars on certain panels at certain screen resolutions
+
+html {
+    scrollbar-width: none;
+}
+
+body {
+    -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}

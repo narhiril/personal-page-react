@@ -22,9 +22,10 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
           frames = 12;
           
     const offsets = useMemo(() => ({
-        base: (-0.585 * scalar) - (0.275 * scalar),
+        base: (-0.325 * scalar),// - (0.275 * scalar),
         flame: -0.585 * scalar,
-        flash: (-0.585 * scalar) / 3.5
+        flash: (-0.585 * scalar) / 3.5,
+        occlusionObject: (-0.625 * scalar)
     }), [scalar]);
 
     //TEXTURE SETUP
@@ -79,7 +80,7 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
 
             //handles wobble immediately before flame animation start
             if (preLaunchWobble.current) {
-                rocket.current.rotation.z = 0.0825 * Math.cos(time.current / 100);
+                rocket.current.rotation.z = 0.0525 * Math.cos(time.current / 100);
                 //skip all subsequent checks
                 return;
             } else {
@@ -94,11 +95,14 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
 
             //handles trigger for flame animation start
             if (!hasFired.current && time.current > 0 && flame.current.material.opacity === 0) {
-                hasFired.current = true;
-                flame.current.material.opacity = 1;
                 console.log("Liftoff");
                 displacement.current += 1;
                 setResetFlash(false);
+                hasFired.current = true;
+                time.current = -interval * 0.35; //slight delay for flash before flame animation
+                setTimeout(() => {
+                    flame.current.material.opacity = 1;
+                }, interval * 0.35);
             }
 
             //advance flame animation to next frame
@@ -154,7 +158,8 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
 
     return (
         <group>
-            <group ref={group}>              
+            <group ref={group} 
+                   renderOrder={2}>              
                 <mesh visible 
                       scale={scalar} 
                       ref={rocket}
@@ -189,6 +194,7 @@ const LaunchableRocket = ({scalar, count, interval, reset, zCoord, canvasDim}) =
                        color={themeColor(theme)} 
                        offset={offsets.base}
                        zCoord={zCoord}
+                       occlusionOffset={offsets.occlusionObject}
             />
         </group>
     );

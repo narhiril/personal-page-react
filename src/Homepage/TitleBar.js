@@ -25,7 +25,8 @@ const TitleBar = ({render, activePanel}) => {
           onPanelChange(activePanel);
         }, 250);
 
-        return () => { clearTimeout(fadeTimer); };  
+        return () => { clearTimeout(fadeTimer); };
+        // eslint-disable-next-line react-hooks/exhaustive-deps  
     }, [activePanel]);
 
     function onPanelChange(panel) {

@@ -11,23 +11,23 @@ const SkillsPanel = ({render}) => {
     if (render) return ( 
         <div className="skills-container">
             <div className="skills-panel">
+                <SkillsSubsection name={"C#"}
+                                  imageSrc={cSharpIcon} 
+                />
                 <SkillsSubsection name={"JavaScript"} 
                                   imageSrc={jsIcon}
                 />
+                <SkillsSubsection name={"React"} 
+                                  imageSrc={reactIcon}
+                />
                 <SkillsSubsection name={"TypeScript"}
                                   imageSrc={tsIcon} 
-                />
-                <SkillsSubsection name={"C#"}
-                                  imageSrc={cSharpIcon} 
                 />
                 <SkillsSubsection name={"HTML5 / CSS"} 
                                   imageSrc={htmlIcon}
                 />
                 <SkillsSubsection name={"Sass / SCSS"} 
                                   imageSrc={sassIcon}
-                />
-                <SkillsSubsection name={"React"} 
-                                  imageSrc={reactIcon}
                 />
             </div>
         </div>

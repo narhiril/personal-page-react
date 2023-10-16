@@ -1,0 +1,8 @@
+@import "../../Shared/UI/scss/shared.scss";
+
+#landing-weapper{
+    @include absolute-center;
+    margin-top: $navbar-item-height;
+    display: grid;
+    grid-template-columns: 45vw 10px 45vw;
+}
